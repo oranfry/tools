@@ -1,0 +1,65 @@
+.params {
+    position: relative;
+}
+
+.param-label, .param-input {
+    box-sizing: border-box;
+}
+
+.param-label {
+    margin: 1em 0 0;
+}
+
+.clear {
+    clear: both;
+}
+
+th.right, td.right {
+    text-align: right;
+}
+
+tr:hover td {
+    background-color: lightgray;
+}
+
+tr.new td {
+    background: #b7dfb7;
+    color: darkgreen;
+}
+
+tr.new:hover td {
+    background: #83c283;
+}
+
+tr.deleted td {
+    background: #dfb7b7;
+    color: darkred;
+}
+
+tr.deleted:hover td {
+    background: #cd9292;
+    color: darkred;
+}
+
+
+.bash {
+    background: #eee;
+    text-align: left;
+    margin-bottom: 1em;
+    display: inline-block;
+    padding: 1em;
+}
+
+.message {
+    background: #dfd;
+    border: 1px solid #cec;
+    padding: 0.5em;
+    display: inline-block;
+}
+
+.warning {
+    background: #fed;
+    border: 1px solid #edc;
+    padding: 0.5em;
+    display: inline-block;
+}
