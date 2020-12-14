@@ -1,11 +1,28 @@
 <?php use contextvariableset\Daterange; ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
-    <head>
-        <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
-        <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
-        <meta charset="utf-8"/>
-        <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></title>
+<head>
+    <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
+    <meta charset="utf-8"/>
+    <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></title>
+    <style>
+        .appcolor-bg,
+        .button.button--main,
+        nav a.current,
+        td.today,
+        tr.today td,
+        .periodchoice.periodchoice--current,
+        .nav-dropdown a.current,
+        .drnav.current,
+        .cv-manip.current {
+            background-color: #<?= HIGHLIGHT ?>;
+        }
+
+        .button.button--main {
+            border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
+        }
+    </style>
 </head>
 <body class="wsidebar">
     <?php require search_plugins('src/php/partial/tools/nav.php'); ?>

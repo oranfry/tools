@@ -1,3 +1,5 @@
+<?php
+/*
 .appcolor-bg,
 .button.button--main,
 nav a.current,
@@ -13,3 +15,4 @@ tr.today td,
 .button.button--main {
     border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
 }
+*/
