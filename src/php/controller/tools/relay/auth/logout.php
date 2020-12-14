@@ -1,5 +1,5 @@
 <?php
 
-$api = new ApiClient($token, APIURL);
+$api = new ApiClient(AUTH_TOKEN, APIURL);
 
 return ['data' => $api->logout()];
