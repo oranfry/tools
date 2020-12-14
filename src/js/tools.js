@@ -35,6 +35,12 @@
         $('.modal-breakout').remove();
     };
 
+    var $instanceform = $('#instanceform');
+
+    $('.instances-trigger').on('click', function(){
+        $('.instances').toggleClass('open');
+    });
+
     $('#loginform').on('submit', function(e){
         e.preventDefault();
 
@@ -57,6 +63,60 @@
         setCookie('token', $(this).find('[name="token"]').val());
         window.location.reload();
     });
+
+    $('.open-custom-daterange:not(.current)').on('click', function(e){
+        e.preventDefault();
+        $('.custom-daterange, .standard-daterange').toggle();
+    });
+
+    $('.fromtoday').on('click', function(e){
+        e.preventDefault();
+        var today = new Date();
+
+        $(this).prevAll().each(function() {
+            if ($(this).is('input')) {
+                $(this).val(today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0'));
+            }
+        });
+    });
+
+    window.getQueryParams = function() {
+        var existingData = getJsonFromUrl(location.href);
+        var instanceData = Object.fromEntries(new FormData($instanceform[0]));
+        var data = $.extend(existingData, instanceData);
+
+        // remove nullish
+        for (var prop in data) {
+            if (Object.prototype.hasOwnProperty.call(data, prop)) {
+                if (!data[prop]) {
+                    delete data[prop];
+                }
+            }
+        }
+
+        return data;
+    };
+
+    window.changeInstance = function() {
+        var base = location.href.split('?')[0];
+        var data = getQueryParams();
+
+        delete data._returnurl;
+
+        var query = $.param(data);
+        var link = base + (query && '?' || '') + query;
+
+        window.location.href = link;
+    };
+
+    window.getFiltersQuery = function() {
+        var queryParams = getQueryParams();
+
+        delete queryParams._returnurl;
+        delete queryParams.back;
+
+        return $.param(queryParams);
+    };
 
     window.blends_api = {
         login: function(username, password) {
@@ -333,5 +393,62 @@
             $('<div class="modal-breakout">').insertAfter(this);
             done = true;
         });
+    });
+
+    var manip = function(){
+        var manips_string = $(this).data('manips');
+
+        if (!manips_string) {
+            return;
+        }
+
+        var manips = manips_string.split('&');
+
+        for (var i = 0; i < manips.length; i++) {
+            var cv_name = manips[i].split('=')[0];
+            var cv_value = manips[i].split('=')[1];
+            var matches = cv_value.match(/^base64:(.*)/);
+            var value;
+
+            if (matches !== null) {
+                value = atob(matches[1]);
+            } else {
+                value = cv_value;
+            }
+
+            $('[name="' + cv_name + '"]').val(value);
+        }
+    }
+
+    $('a.cv-manip').on('click', function(e) {
+        e.preventDefault();
+        manip.call(this);
+        changeInstance();
+    });
+
+    $('input.cv-manip:not(.cv-surrogate), select.cv-manip:not(.cv-surrogate)').on('change', function(e) {
+        manip.call(this);
+        changeInstance();
+    });
+
+    $('.cv-surrogate').on('change', function(e){
+        e.preventDefault();
+        var for_cv = $(this).data('for');
+        var value = $(this).is('[type="checkbox"]') && $(this).is(':checked') || $(this).val() || null;
+        var $for = $instanceform.find('[name="' + for_cv + '"]');
+
+        $for.val(value);
+
+        if ($(this).is('.cv-manip')) {
+            manip.call(this);
+        }
+
+        if (!$(this).is('.no-autosubmit')) {
+            changeInstance();
+        }
+    });
+
+    $('.cv').on('change', function(e){
+        changeInstance();
     });
 })();
