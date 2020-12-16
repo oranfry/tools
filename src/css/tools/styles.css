@@ -730,7 +730,7 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
-.filter i {
+.filter .filter__close-icon {
     float: right;
 }
 
@@ -940,14 +940,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 1199px) {
-    .only-super1200 {
-        display: none;
-    }
-
     .navset {
         display: inline-block;
         cursor: pointer;
         position: relative;
+    }
+
+    .only-super1200 {
+        display: none;
     }
 
     .navset:not(.navset--nobar):not(:first-child):before {
@@ -1067,12 +1067,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .navbar .inline-modal.inline-modal--right {
         left: 0.5em;
-    }
-
-    .navbar .icon {
-        width: 1.3em;
-        height: 1.3em;
-        line-height: 1.3em;
     }
 
     .sidebar-backlink-container {

@@ -35,6 +35,11 @@ class Repeater extends \ContextVariableSet
 
     public function display()
     {
+    }
+
+    public function inputs()
+    {
+
         ?>
         <div style="display: none">
             <input class="cv" type="hidden" name="<?= $this->prefix ?>__period" value="<?= $this->period ?>">

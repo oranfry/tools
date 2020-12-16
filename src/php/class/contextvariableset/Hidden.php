@@ -13,8 +13,11 @@ class Hidden extends \ContextVariableSet
 
         $this->value = @$data['value'];
     }
-
     public function display()
+    {
+    }
+
+    public function inputs()
     {
         ?>
         <div style="display: none">

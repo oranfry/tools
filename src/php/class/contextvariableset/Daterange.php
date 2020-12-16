@@ -97,12 +97,18 @@ class Daterange extends \ContextVariableSet
                         <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--gray icon--arrowright" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $nextfrom]); ?>"></a></div>
                     <?php endif ?>
                 </div>
-                <input class="cv" type="hidden" name="<?= $this->prefix ?>__period" value="<?= $this->period ?>">
-                <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawrawfrom" value="<?= $this->rawrawfrom ?>">
-                <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawto" value="<?= $this->rawto ?>">
             </div>
         <?php
 
         $GLOBALS['title'] = (@$GLOBALS['title'] ? @$GLOBALS['title'] . ' ' : '') . $daterangetitle;
+    }
+
+    public function inputs()
+    {
+        ?>
+        <input class="cv" type="hidden" name="<?= $this->prefix ?>__period" value="<?= $this->period ?>">
+        <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawrawfrom" value="<?= $this->rawrawfrom ?>">
+        <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawto" value="<?= $this->rawto ?>">
+        <?php
     }
 }

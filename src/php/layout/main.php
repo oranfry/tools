@@ -22,6 +22,16 @@
         .button.button--main {
             border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
         }
+
+        <?php
+            list($h) = hexToHsl(HIGHLIGHT);
+            list(, $s, $l) = hexToHsl(REFCOL);
+
+            $hex = hslToHex([$h, $s, $l]);
+        ?>
+
+        .calendar-month .col .icon { filter: hue-rotate(<?= round($h * 360) ?>deg) brightness(0.8); }
+        .calendar-month .col { color: #<?= adjustBrightness($hex, -100) ?>; }
     </style>
 </head>
 <body class="wsidebar">
@@ -40,11 +50,15 @@
         <?php require search_plugins('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php'); ?>
     </div>
 
-    <?php
-        foreach (ContextVariableSet::getAll() as $active) {
-            $active->enddisplay();
-        }
-    ?>
+    <form id="instanceform">
+        <?php
+            foreach (ContextVariableSet::getAll() as $active) {
+                $active->inputs();
+            }
+        ?>
+        <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
+        <div id="new-vars-here" style="display: none"></div>
+    </form>
 
     <?php if (AUTH_TOKEN): ?>
         <?php $daterange = new Daterange('daterange'); ?>

@@ -34,14 +34,14 @@ class Showas extends \ContextVariableSet
                 </div>
             </div>
             <i class="nav-modal-trigger only-sub1200 current icon icon--gray icon--<?= static::$icons[$this->value] ?>" alt="<?= $this->value ?>"></i>
-            <input class="cv" type="hidden" name="<?= $this->prefix ?>__value" value="<?= $this->value ?>">
         </div>
         <?php
     }
 
-    public function enddisplay()
+    public function inputs()
     {
         ?>
+        <input class="cv" type="hidden" name="<?= $this->prefix ?>__value" value="<?= $this->value ?>">
         <?php
     }
 }

@@ -12,6 +12,10 @@ class CvsBool extends ContextVariableSet
         ?><input class="cv cv-surrogate" type="checkbox" <?= $GLOBALS[$name] ?  'checked="checked"' : '' ?> data-for="<?= $name ?>" value="yes"><?php
         ?><div class="clear"></div><?php
     }
+
+    public function inputs($prefix, $nickname)
+    {
+    }
 }
 
 return new CvsBool();

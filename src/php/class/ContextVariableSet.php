@@ -14,11 +14,7 @@ abstract class ContextVariableSet
 
     abstract public function display();
 
-    public function tinydisplay()
-    {
-    }
-
-    public function enddisplay()
+    public function inputs()
     {
     }
 

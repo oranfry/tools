@@ -30,7 +30,6 @@ class Value extends \ContextVariableSet
         $label = $label ?: preg_replace('/.*_/', '', $this->prefix);
 
         ?><div class="navset">
-            <input class="cv" name="<?= $this->prefix ?>__value" placeholder="<?= $this->prefix ?>" value="<?= $this->value ?>" style="display: none">
             <div class="inline-rel">
                 <div class="inline-modal">
                     <div class="inline-dropdown">
@@ -46,5 +45,12 @@ class Value extends \ContextVariableSet
                 <span class="inline-modal-trigger"><?= $label ?></span>
             </div>
         </div><?php
+    }
+
+    public function inputs()
+    {
+        ?>
+        <input class="cv" name="<?= $this->prefix ?>__value" placeholder="<?= $this->prefix ?>" value="<?= $this->value ?>" style="display: none">
+        <?php
     }
 }

@@ -20,6 +20,10 @@ class Filter extends \ContextVariableSet
 
     public function display()
     {
+    }
+
+    public function inputs()
+    {
         ?>
         <div style="display: none">
             <input class="cv" plaecholder="field" name="<?= $this->prefix ?>__field" value="<?= $this->field ?>">

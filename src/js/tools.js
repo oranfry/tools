@@ -155,7 +155,7 @@
                 }
             });
         },
-        linetypeAdd: function(linetype, repeater, range_from, data){
+        linetypeAdd: function(linetype, repeater, range_from, range_to, data){
             $.ajax('/api/' + linetype + '/add?repeater=' + repeater + '&from=' + range_from + '&to=' + range_to, {
                 method: 'post',
                 contentType: false,
