@@ -499,4 +499,17 @@
             }
         }
     });
+
+    $('.adhoc-toggle').on('click', function(){
+        var adhocvalue = prompt("New value");
+
+        if (adhocvalue) {
+            var $select = $(this).prev();
+            var $option = $('<option>' + adhocvalue + '</option>');
+
+            $option.insertAfter($select.children().first());
+            $select.val(adhocvalue);
+            $select.change();
+        }
+    });
 })();
