@@ -51,7 +51,7 @@
                 }
             });
         },
-        blendDelete: function(blend, query){
+        blendDelete: function(blend, query, success){
             $.ajax('/api/blend/' + blend + '?' + query, {
                 method: 'delete',
                 contentType: false,
@@ -59,9 +59,7 @@
                 beforeSend: function(request) {
                     request.setRequestHeader("X-Auth", getCookie('token'));
                 },
-                success: function(data) {
-                    window.location.reload();
-                },
+                success: success,
                 error: function(data){
                     alert(data.responseJSON.error);
                 }
