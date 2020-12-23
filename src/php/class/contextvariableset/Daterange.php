@@ -41,33 +41,12 @@ class Daterange extends \ContextVariableSet
     public function display()
     {
         $current_period = Period::load($this->period);
-        $highlight = ['', '', ''];
 
-        if (@$current_period->suppress_nav) {
-            $daterangetitle = $current_period->navlabel;
-        } else {
-            $rawprevfrom = $current_period->rawstart(date_shift($this->from, "-{$current_period->step}"));
-            $rawcurrfrom = $current_period->rawstart(date('Y-m-d'));
-            $rawnextfrom = $current_period->rawstart(date_shift($this->from, "+{$current_period->step}"));
+        if (!@$current_period->suppress_nav) {
+            extract($this->computeDates());
+        }
 
-            $prevfrom = $current_period->start($rawprevfrom);
-            $currfrom = $current_period->start($rawcurrfrom);
-            $nextfrom = $current_period->start($rawnextfrom);
-
-            $prevto = date_shift($current_period->start(date_shift($rawprevfrom, "+{$current_period->step}")), '-1 day');
-            $currto = date_shift($current_period->start(date_shift($rawcurrfrom, "+{$current_period->step}")), '-1 day');
-            $nextto = date_shift($current_period->start(date_shift($rawnextfrom, "+{$current_period->step}")), '-1 day');
-
-            $inuse = ($this->from == date_shift($prevto, '+1 day') && $this->to == date_shift($nextfrom, '-1 day'));
-
-            if ($inuse) {
-                $highlight[min(1, max(-1, strcmp($this->from, $currfrom))) + 1] = 'current';
-            }
-
-            $daterangetitle = $inuse ?
-                $current_period->label($this->from, $this->to) :
-                date('D j F Y', strtotime($this->from)) . ' ~ ' . date('D j F Y', strtotime($this->to));
-        } ?>
+        ?>
             <div class="navset">
                 <div class="inline-rel">
                     <div class="inline-modal">
@@ -99,8 +78,6 @@ class Daterange extends \ContextVariableSet
                 </div>
             </div>
         <?php
-
-        $GLOBALS['title'] = (@$GLOBALS['title'] ? @$GLOBALS['title'] . ' ' : '') . $daterangetitle;
     }
 
     public function inputs()
@@ -110,5 +87,49 @@ class Daterange extends \ContextVariableSet
         <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawrawfrom" value="<?= $this->rawrawfrom ?>">
         <input class="cv" type="hidden" name="<?= $this->prefix ?>__rawto" value="<?= $this->rawto ?>">
         <?php
+    }
+
+    public function getTitle()
+    {
+        $current_period = Period::load($this->period);
+
+        if (@$current_period->suppress_nav) {
+            return $current_period->navlabel;
+        }
+
+        extract($this->computeDates());
+
+        if ($inuse) {
+            return $current_period->label($this->from, $this->to);
+        }
+
+        return date('D j F Y', strtotime($this->from)) . ' ~ ' . date('D j F Y', strtotime($this->to));
+    }
+
+    public function computeDates()
+    {
+        $current_period = Period::load($this->period);
+
+        $rawprevfrom = $current_period->rawstart(date_shift($this->from, "-{$current_period->step}"));
+        $rawcurrfrom = $current_period->rawstart(date('Y-m-d'));
+        $rawnextfrom = $current_period->rawstart(date_shift($this->from, "+{$current_period->step}"));
+
+        $result = [
+            'prevfrom' => $current_period->start($rawprevfrom),
+            'currfrom' => $current_period->start($rawcurrfrom),
+            'nextfrom' => $current_period->start($rawnextfrom),
+            'prevto' => date_shift($current_period->start(date_shift($rawprevfrom, "+{$current_period->step}")), '-1 day'),
+            'currto' => date_shift($current_period->start(date_shift($rawcurrfrom, "+{$current_period->step}")), '-1 day'),
+            'nextto' => date_shift($current_period->start(date_shift($rawnextfrom, "+{$current_period->step}")), '-1 day'),
+            'highlight' => ['', '', ''],
+        ];
+
+        $result['inuse'] = ($this->from == date_shift($result['prevto'], '+1 day') && $this->to == date_shift($result['nextfrom'], '-1 day'));
+
+        if ($result['inuse']) {
+            $result['highlight'][min(1, max(-1, strcmp($this->from, $result['currfrom']))) + 1] = 'current';
+        }
+
+        return $result;
     }
 }

@@ -10,18 +10,6 @@
     margin: 1em 0 0;
 }
 
-.clear {
-    clear: both;
-}
-
-th.right, td.right {
-    text-align: right;
-}
-
-tr:hover td {
-    background-color: lightgray;
-}
-
 tr.new td {
     background: #b7dfb7;
     color: darkgreen;

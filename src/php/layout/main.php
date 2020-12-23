@@ -1,11 +1,13 @@
 <?php use contextvariableset\Daterange; ?>
+<?php use contextvariableset\Repeater; ?>
+<?php $repeater = ContextVariableSet::get('repeater'); ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
     <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
     <meta charset="utf-8"/>
-    <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></title>
+    <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?> &bull; <?= $title ?? PAGE ?></title>
     <style>
         .appcolor-bg,
         .button.button--main,
@@ -37,9 +39,8 @@
 <body class="wsidebar">
     <?php require search_plugins('src/php/partial/tools/nav.php'); ?>
     <div class="wrapper">
-        <?php if (@$GLOBALS['title']): ?>
-            <h3><?= $GLOBALS['title'] ?></h3>
-        <?php endif ?>
+        <?php if (BACK): ?><br><div class="only-super1200"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php endif ?>
+        <h3><?= $title ?? PAGE ?></h3>
         <?php if (count(@$warnings ?: [])): ?>
             <br>
             <?php foreach ($warnings as $warning): ?>
@@ -51,11 +52,7 @@
     </div>
 
     <form id="instanceform">
-        <?php
-            foreach (ContextVariableSet::getAll() as $active) {
-                $active->inputs();
-            }
-        ?>
+        <?php foreach (ContextVariableSet::getAll() as $active) : ?><?php $active->inputs(); ?><?php endforeach ?>
         <input type="hidden" name="_returnurl" value="<?= htmlspecialchars_decode($_SERVER['REQUEST_URI']) ?>">
         <div id="new-vars-here" style="display: none"></div>
     </form>
@@ -67,7 +64,7 @@
 
         <script>
             window.orig_token = '<?= AUTH_TOKEN ?>';
-            window.repeater = <?= $repeater->period ? "'" . $repeater->render() . "'" : 'null' ?>;
+            window.repeater = <?= $repeater && $repeater->period ? "'" . $repeater->render() . "'" : 'null' ?>;
             window.range_from = <?= $daterange->from ? "'" . $daterange->from . "'" : 'null' ?>;
             window.range_to = <?= $daterange->to ? "'" . $daterange->to . "'" : 'null' ?>;
             window.username = '<?= $username; ?>';

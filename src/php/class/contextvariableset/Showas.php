@@ -27,7 +27,6 @@ class Showas extends \ContextVariableSet
     {
         ?>
         <div class="navset">
-            <div class="nav-title">Show As</div>
             <div class="nav-modal">
                 <div class="nav-dropdown">
                     <?php foreach ($this->options as $showas): ?><a class="showas-trigger <?= $showas == $this->value ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['value' => $showas]); ?>"><i class="icon icon--gray icon--<?= static::$icons[$showas] ?>" alt="<?= $showas ?>"></i></a><?php endforeach ?>

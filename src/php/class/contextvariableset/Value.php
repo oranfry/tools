@@ -39,6 +39,7 @@ class Value extends \ContextVariableSet
                                 <a class="cv-manip <?= $this->value == $option ? 'current' : ''?>" data-manips="<?= $this->prefix ?>__value=<?= $option ?>"><?= !is_numeric($index) ? $index : $option ?></a>
                             <?php endforeach ?>
                         <?php else: ?>
+                                <input class="cv-surrogate" data-for="<?= $this->prefix ?>__value" type="text" value="<?= $this->value ?>">
                         <?php endif ?>
                     </div>
                 </div>

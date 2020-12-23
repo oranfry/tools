@@ -26,6 +26,26 @@ function adjustBrightness($hex, $steps)
     return $return;
 }
 
+function get_query_filters()
+{
+    $filters = [];
+
+    foreach (explode('&', $_SERVER['QUERY_STRING']) as $v) {
+        $r = preg_split('/(\*=|>=|<=|~|=|<|>)/', urldecode($v), -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        if (count($r) == 3) {
+            $values = explode(',', $r[2]);
+            $filters[] = (object) [
+                'field' => $r[0],
+                'cmp' => $r[1],
+                'value' => count($values) > 1 ? $values : reset($values),
+            ];
+        }
+    }
+
+    return $filters;
+}
+
 function hexToHsl($hex)
 {
     $hex = array($hex[0].$hex[1], $hex[2].$hex[3], $hex[4].$hex[5]);

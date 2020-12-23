@@ -85,7 +85,19 @@
         return result;
     }
 
+    window.getSelectionQuery = function($selected)
+    {
+        var deepids = $selected.map(function(){
+            return $(this).data('type') + ':' + $(this).data('id');
+        }).get();
 
+        return 'deepid=' + deepids.join(',');
+    }
+
+    window.getSelected = function()
+    {
+        return $('tr[data-id] .select-column input[type="checkbox"]:checked').closest('tr[data-id]');
+    }
 
     var $instanceform = $('#instanceform');
 
@@ -220,170 +232,6 @@
         return result;
     }
 
-    window.blends_api = {
-        login: function(username, password) {
-            $.ajax('/api/auth/login', {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                data: JSON.stringify({username: username, password: password}),
-                success: function(data) {
-                    if (typeof data.token != 'undefined') {
-                        setCookie('token', data.token);
-                        window.location.reload();
-                    } else {
-                        alert(data.error || 'Unknown error');
-                    }
-                },
-                error: function(data){
-                    alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
-                }
-            });
-        },
-        updateBlend: function(blend, query, data) {
-            $.ajax('/api/blend/' + blend + '/update?' + query, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                data: JSON.stringify(data),
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function(data) {
-                    window.location.reload();
-                },
-                error: function(data){
-                    alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
-                }
-            });
-        },
-        linetypeAdd: function(linetype, repeater, range_from, range_to, data){
-            $.ajax('/api/' + linetype + '/add?repeater=' + repeater + '&from=' + range_from + '&to=' + range_to, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                data: JSON.stringify(data),
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function(data) {
-                    window.location.reload();
-                },
-                error: function(data){
-                    alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
-                }
-            });
-        },
-        blendDelete: function(blend, query){
-            $.ajax('/api/blend/' + blend + '?' + query, {
-                method: 'delete',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function(data) {
-                    window.location.reload();
-                },
-                error: function(data){
-                    alert(data.responseJSON.error);
-                }
-            });
-        },
-        blendPrint: function(blend, query) {
-            $.ajax('/api/blend/' + blend + '/print?' + query, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                error: function(data){
-                    alert(data.responseJSON.error);
-                }
-            });
-        },
-        linePrint: function(linetype, id) {
-            $.ajax('/api/' + linetype + '/print?id=' + id, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function(data) {
-                    $('#output').html(data.messages.join(', '));
-                }
-            });
-        },
-        lineDelete: function(linetype, id) {
-            $.ajax('/api/' + linetype + '?id=' + id, {
-                method: 'delete',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function() {
-                    window.location.reload();
-                },
-                error: function(data){
-                    alert(data.responseJSON.error);
-                }
-            });
-        },
-        lineUnlink: function(linetype, id, parent) {
-            $.ajax('/api/' + linetype + '/' + id + '/unlink/' + parent, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function() {
-                    window.location.reload();
-                },
-                error: function(data){
-                    alert(data.responseJSON.error);
-                }
-            });
-        },
-        lineSave: function(linetype, line, back) {
-            $.ajax('/api/' + linetype, {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                data: JSON.stringify([line]),
-                success: function(data) {
-                    window.location.href = back;
-                },
-                error: function(data){
-                    alert(data.responseJSON.error);
-                }
-            });
-        },
-        logout: function() {
-            $.ajax('/api/auth/logout', {
-                method: 'post',
-                contentType: false,
-                processData: false,
-                beforeSend: function(request) {
-                    request.setRequestHeader("X-Auth", getCookie('token'));
-                },
-                success: function(data) {
-                    deleteCookie('token');
-                    window.location.href = '/';
-                },
-                error: function(data){
-                    alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
-                }
-            });
-        }
-    };
-
     var onResize = function() {
         if ($('.calendar-month').length && $('body').height() < $(window).height()) {
             var avail = $(window).height() - $('.daterow').first().offset().top - ($('body').width() >= 800 && 10 || 0);
@@ -448,8 +296,13 @@
     });
 
     $('body').on('click', '.modal-breakout', closeModals);
-
     $('.close-modal').on('click', closeModals);
+
+    $(document).on('keyup', function(event) {
+        if (event.key == "Escape") {
+            closeModals();
+        }
+    });
 
     $('.inline-modal-trigger, .nav-modal-trigger').on('click', function(e){
         var prefix = 'inline';
@@ -552,5 +405,98 @@
 
     $('.cv').on('change', function(e){
         changeInstance();
+    });
+
+    var repeaterChanged = function(){
+        if ($('.repeater-select').val()) {
+            var r = new RegExp($('.repeater-select').val());
+
+            $('.repeater-modal [data-repeaters]').each(function(){
+                $(this).toggle($(this).data('repeaters').match(r) !== null);
+            });
+        } else {
+            $('.repeater-modal [data-repeaters]').hide();
+        }
+    };
+
+    $('.repeater-select').on('change', repeaterChanged);
+    repeaterChanged();
+
+    $('.easy-table tr .selectall').on('click', function(e){
+        var $table = $(this).closest('table');
+        var $tbody = $(this).closest('tbody');
+        var $block;
+
+        if ($tbody.length) {
+            $block = $tbody;
+        } else {
+            $block = $table;
+        }
+
+        var $boxes = $block.find('tr[data-id] .select-column input[type="checkbox"]');
+        var checked = $boxes.filter(':checked').length > 0;
+        $boxes.prop('checked', !checked);
+        $boxes.each(function(){
+            $(this).closest('tr[data-id]').toggleClass('selected', $(this).is(':checked'));
+        });
+    });
+
+    $('.toggle-selecting').on('click', function(){
+        let $table = $(this).closest('.easy-table');
+        let selecting = $table.hasClass('selecting');
+        selecting = !selecting;
+
+        $table.toggleClass('selecting', selecting);
+
+        if (!selecting) {
+            $table.find('.select-column input[type="checkbox"]').prop('checked', false).each(function(){
+                $(this).closest('tr[data-id]').removeClass('selected');
+            });
+        }
+    });
+
+    $('.select-column input').on('click', function(event) {
+        event.stopPropagation();
+    });
+
+    $('.select-column input').on('change', function() {
+        $(this).closest('tr[data-id]').toggleClass('selected', $(this).is(':checked'));
+    });
+
+    $('.file-field-controls__delete, .file-field-controls__generate, .file-field-controls__cancel, .file-field-controls__change').click(function(){
+        var $controls = $(this).closest('.file-field-controls');
+        var $input = $controls.find('.file-field-controls__input');
+        var $actions = $controls.find('.file-field-controls__actions');
+        var $willdelete = $controls.find('.file-field-controls__willdelete');
+        var $willgenerate = $controls.find('.file-field-controls__willgenerate');
+        var name = $controls.find('input[type="file"]').attr('name');
+
+        if ($(this).hasClass('file-field-controls__delete')) {
+            $willdelete.append($('<input type="hidden" name="' + name + '_delete" value="1">'));
+            $input.hide();
+            $willdelete.show();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__change')) {
+            $input.show();
+            $willdelete.hide();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__generate')) {
+            $willgenerate.append($('<input type="hidden" name="' + name + '_generate" value="1">'));
+            $input.hide();
+            $willgenerate.show();
+            $actions.hide();
+        } else if ($(this).hasClass('file-field-controls__cancel')) {
+            $controls.find('input[type="hidden"]').remove();
+            $willdelete.hide();
+            $willgenerate.hide();
+
+            if ($actions.length) {
+                $actions.show();
+                $input.hide();
+            } else {
+                $actions.hide();
+                $input.show();
+            }
+        }
     });
 })();
