@@ -7,7 +7,11 @@ if (AUTH_TOKEN) {
 }
 
 if (@$_COOKIE['token'] && Blends::verify_token($_COOKIE['token'])) {
-    header('Location: ' . landingpage());
+    if (!@Config::get()->landingpage) {
+        error_response('No landing page defined');
+    }
+
+    header('Location: ' . Config::get()->landingpage);
     die('Redirecting...');
 }
 

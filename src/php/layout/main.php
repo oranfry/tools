@@ -8,33 +8,6 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
     <meta charset="utf-8"/>
     <title><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?> &bull; <?= $title ?? PAGE ?></title>
-    <style>
-        .appcolor-bg,
-        .button.button--main,
-        nav a.current,
-        td.today,
-        tr.today td,
-        .periodchoice.periodchoice--current,
-        .nav-dropdown a.current,
-        .drnav.current,
-        .cv-manip.current {
-            background-color: #<?= HIGHLIGHT ?>;
-        }
-
-        .button.button--main {
-            border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
-        }
-
-        <?php
-            list($h) = hexToHsl(HIGHLIGHT);
-            list(, $s, $l) = hexToHsl(REFCOL);
-
-            $hex = hslToHex([$h, $s, $l]);
-        ?>
-
-        .calendar-month .col .icon { filter: hue-rotate(<?= round($h * 360) ?>deg) brightness(0.8); }
-        .calendar-month .col { color: #<?= adjustBrightness($hex, -100) ?>; }
-    </style>
 </head>
 <body class="wsidebar">
     <?php require search_plugins('src/php/partial/tools/nav.php'); ?>

@@ -26,6 +26,13 @@ function adjustBrightness($hex, $steps)
     return $return;
 }
 
+function doover()
+{
+    setcookie('token', '', time() - 3600);
+    header('Location: /');
+    die();
+}
+
 function get_query_filters()
 {
     $filters = [];
@@ -137,6 +144,8 @@ function postroute_tools()
             define('AUTH_TOKEN', @$_COOKIE['token']);
 
             break;
+        case 'pre':
+            break;
         case 'none':
             define('AUTH_TOKEN', null);
 
@@ -153,9 +162,8 @@ function postroute_tools()
             error_response('Internal Server Error', 500);
     }
 
-
     if (
-        in_array(AUTHSCHEME, ['header', 'cookie'])
+        in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])
         &&
         (!AUTH_TOKEN || !Blends::verify_token(AUTH_TOKEN))
     ) {

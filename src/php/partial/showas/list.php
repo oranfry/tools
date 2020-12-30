@@ -32,7 +32,7 @@
                            ?><a href="/api/download/<?= $record->{"{$field->name}_path"} ?>" download><i class="icon icon--gray icon--<?= @$field->translate[$field->icon] ?? $field->icon ?>"></i></a><?php
                         } else {
                             echo is_callable(@$field->prefix) ? ($field->prefix)($record) : @$field->prefix;
-                            echo $field->type == 'fake' ? $field->value : (strlen($value) > MAX_COLUMN_WIDTH ? substr($value, 0, MAX_COLUMN_WIDTH - 1) . "&hellip;" : $value);
+                            echo $field->type == 'fake' ? $field->value : $value;
                             echo is_callable(@$field->suffix) ? ($field->suffix)($record) : @$field->suffix;
                         }
 
