@@ -174,12 +174,16 @@ input, select, button, textarea, .textbox, .button {
 }
 
 input[type="checkbox"] {
-    display: block;
+    display: inline-block;
     width: 14px;
     height: 14px;
     background-size: contain;
     filter: grayscale(100%);
     margin: 0;
+}
+
+.easy-table input[type="checkbox"] {
+    display: block;
 }
 
 .button {
