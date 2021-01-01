@@ -35,7 +35,7 @@ function doover()
 
 function get_flat_list($name)
 {
-    $lists = Blend::load(AUTH_TOKEN, 'lists')->search(AUTH_TOKEN, [(object)['field' => 'name', 'cmp' => '=', 'value' => 'accounts']]);
+    $lists = Blend::load(AUTH_TOKEN, 'lists')->search(AUTH_TOKEN, [(object)['field' => 'name', 'cmp' => '=', 'value' => $name]]);
 
     if (@$lists->error || count($lists) != 1) {
         return;
