@@ -33,6 +33,22 @@ function doover()
     die();
 }
 
+function get_flat_list($name)
+{
+    $lists = Blend::load(AUTH_TOKEN, 'lists')->search(AUTH_TOKEN, [(object)['field' => 'name', 'cmp' => '=', 'value' => 'accounts']]);
+
+    if (@$lists->error || count($lists) != 1) {
+        return;
+    }
+
+    $list = reset($lists);
+    Linetype::load(AUTH_TOKEN, 'list')->load_children(AUTH_TOKEN, $list);
+
+    return array_map(function($i) {
+        return $i->item;
+    }, $list->listitems);
+}
+
 function get_query_filters()
 {
     $filters = [];
