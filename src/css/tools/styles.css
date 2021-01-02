@@ -822,6 +822,34 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 0.2em 1em;
 }
 
+.graph-label {
+    position: absolute;
+    line-height: 1em;
+    transform-origin: 100% 100%;
+    font-size: 14px;
+}
+
+.graph-label.graph-label--bump-down {
+    margin-top: 0.7em;
+}
+
+.graph-label.graph-label--bump-up {
+    margin-top: -0.7em;
+}
+
+.graph-label.graph-label--bump-up2 {
+    margin-top: -1.7em;
+}
+
+.graph-label.graph-label--bump-left {
+    margin-right: 0.7em;
+}
+
+.graph-label.graph-label--bump-right {
+    margin-left: 1em;
+}
+
+
 @media screen {
     nav a span, .event img {
         filter: grayscale(100%);
