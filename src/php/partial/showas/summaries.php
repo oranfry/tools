@@ -6,7 +6,6 @@ if (empty($summaries)) {
 <table class="easy-table">
     <thead>
         <tr>
-            <th><?= $groupfield ?></th>
             <?php foreach ($fields as $field): ?>
                 <?php if (@$field->summary != 'sum') {
     continue;
@@ -18,7 +17,6 @@ if (empty($summaries)) {
     <tbody>
         <?php foreach ($summaries as $group => $summary): ?>
             <tr>
-                <td><?= $group ?></td>
                 <?php foreach ($fields as $field): ?>
                     <?php if (@$field->summary != 'sum') {
     continue;
