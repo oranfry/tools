@@ -3,7 +3,7 @@
 <div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div>
 <div class="instances navbar printhide">
     <?php if (BACK): ?><div class="only-sub1200 navset sidebar-backlink-container"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php endif ?>
-    <?php @include search_plugins('src/php/partial/nav.php'); ?>
+    <?php @include search_plugins('src/php/partial/' . (@BlendsConfig::get(AUTH_TOKEN)->nav ?? 'nav') . '.php'); ?>
     <?php @include search_plugins('src/php/partial/nav/' . PAGE . '.php'); ?>
     <?php if (defined('ROOT_USERNAME') && AUTH_TOKEN && Blends::token_username(AUTH_TOKEN) == ROOT_USERNAME): ?>
         <form action="/switch-user" method="post" class="only-super1200">
