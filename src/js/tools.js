@@ -467,19 +467,23 @@
         var $controls = $(this).closest('.file-field-controls');
         var $input = $controls.find('.file-field-controls__input');
         var $actions = $controls.find('.file-field-controls__actions');
+        var $generate = $controls.find('.file-field-controls__generate');
         var $willdelete = $controls.find('.file-field-controls__willdelete');
         var $willgenerate = $controls.find('.file-field-controls__willgenerate');
         var name = $controls.find('input[type="file"]').attr('name');
+        var hasValue = $controls.data('hasvalue');
 
         if ($(this).hasClass('file-field-controls__delete')) {
             $willdelete.append($('<input type="hidden" name="' + name + '_delete" value="1">'));
             $input.hide();
             $willdelete.show();
             $actions.hide();
+            $generate.show();
         } else if ($(this).hasClass('file-field-controls__change')) {
             $input.show();
             $willdelete.hide();
             $actions.hide();
+            $generate.hide();
         } else if ($(this).hasClass('file-field-controls__generate')) {
             $willgenerate.append($('<input type="hidden" name="' + name + '_generate" value="1">'));
             $input.hide();
@@ -489,8 +493,9 @@
             $controls.find('input[type="hidden"]').remove();
             $willdelete.hide();
             $willgenerate.hide();
+            $generate.show();
 
-            if ($actions.length) {
+            if (hasValue) {
                 $actions.show();
                 $input.hide();
             } else {
