@@ -8,26 +8,20 @@ class listitem extends \Linetype
         $this->table = 'listitem';
         $this->label = 'List Item';
         $this->fields = [
-            (object) [
-                'name' => 'item',
-                'type' => 'text',
-                'fuse' => '{t}.item',
-            ],
-            (object) [
-                'name' => 'comment',
-                'type' => 'text',
-                'fuse' => '{t}.comment',
-            ],
+            'item' => function($records) {
+                return $records['/']->item;
+            },
+            'comment' => function($records) {
+                return $records['/']->comment;
+            },
         ];
         $this->unfuse_fields = [
-            '{t}.item' => (object) [
-                'expression' => ':{t}_item',
-                'type' => 'varchar(255)',
-            ],
-            '{t}.comment' => (object) [
-                'expression' => ':{t}_comment',
-                'type' => 'varchar(255)',
-            ],
+            'item' => function($line, $oldline) {
+                return $line->item;
+            },
+            'comment' => function($line, $oldline) {
+                return $line->comment;
+            },
         ];
     }
 

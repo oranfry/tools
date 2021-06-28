@@ -8,26 +8,20 @@ class lisst extends \Linetype
         $this->table = 'list';
         $this->label = 'List';
         $this->fields = [
-            (object) [
-                'name' => 'name',
-                'type' => 'text',
-                'fuse' => '{t}.name',
-            ],
-            (object) [
-                'name' => 'comment',
-                'type' => 'text',
-                'fuse' => '{t}.comment',
-            ],
+            'name' => function($records) {
+                return $records['/']->name;
+            },
+            'comment' => function($records) {
+                return $records['/']->comment;
+            },
         ];
         $this->unfuse_fields = [
-            '{t}.name' => (object) [
-                'expression' => ':{t}_name',
-                'type' => 'varchar(255)',
-            ],
-            '{t}.comment' => (object) [
-                'expression' => ':{t}_comment',
-                'type' => 'varchar(255)',
-            ],
+            'name'=> function($line, $oldline) {
+                return $line->name;
+            },
+            'comment'=> function($line, $oldline) {
+                return $line->comment;
+            },
         ];
         $this->children = [
             (object) [
