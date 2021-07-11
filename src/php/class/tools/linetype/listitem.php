@@ -12,7 +12,7 @@ class listitem extends \Linetype
                 return $records['/']->item;
             },
             'comment' => function($records) {
-                return $records['/']->comment;
+                return @$records['/']->comment;
             },
         ];
         $this->unfuse_fields = [
@@ -20,7 +20,7 @@ class listitem extends \Linetype
                 return $line->item;
             },
             'comment' => function($line, $oldline) {
-                return $line->comment;
+                return @$line->comment;
             },
         ];
     }
