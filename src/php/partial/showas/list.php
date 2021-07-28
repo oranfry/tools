@@ -1,22 +1,27 @@
 <?php $daterange = ContextVariableSet::get('daterange'); ?>
+
 <table class="easy-table">
     <thead>
         <tr>
-            <th class="select-column printhide"><i class="icon icon--gray icon--smalldot-o selectall"></i></td></th>
+            <?php if (0 && @$editable) : ?>
+                <th class="select-column printhide"><i class="icon icon--gray icon--smalldot-o selectall"></i></td></th>
+            <?php endif ?>
             <?php foreach ($fields as $field): ?>
                 <th class="<?= $field->type == 'number' ? 'right' : '' ?>"><?= $field->name ?></th>
             <?php endforeach ?>
-            <th></th>
+            <?php if (@$editable) : ?><th></th><?php endif ?>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($records as $i => $record): ?>
             <tr
                 <?= @$parent ? "data-parent=\"{$parent}\"" : '' ?>
-                data-id="<?= $record->id ?>"
-                data-type="<?= $record->type ?>"
+                data-id="<?= @$record->id ?>"
+                data-type="<?= @$record->type ?>"
             >
-                <td class="select-column printhide"><input type="checkbox"></td>
+                <?php if (0 && @$editable) : ?>
+                    <td class="select-column printhide"><input type="checkbox"></td>
+                <?php endif ?>
                 <?php foreach ($fields as $field): ?>
                     <?php $value = @$field->value ? computed_field_value($record, $field->value) : @$record->{$field->name}; ?>
                     <td data-value="<?= $value ?>" style="<?= $field->type == "number" ? 'text-align: right;' : '' ?>" class="<?= @$field->sacrifice ? 'sacrifice' : '' ?>"><?php
@@ -41,20 +46,14 @@
                         }
                     ?></td>
                 <?php endforeach ?>
-                <td class="printhide" style="text-align: right; vertical-align: middle">
-                    <a href="<?= editlink($record->id, $record->type) ?>"><i class="icon icon--gray icon--edit"></i></a>
-                    <?php if (@$parent): ?>
-                        <i class="trigger-unlink-line icon icon--gray icon--unlink"></i>
-                    <?php endif ?>
-                    <i class="trigger-delete-line icon icon--gray icon--times"></i>
-                </td>
+                <?php if (@$editable) : ?>
+                    <td class="printhide" style="text-align: right; vertical-align: middle">
+                        <a href="<?= editlink($record->id, $record->type) ?>"><i class="icon icon--gray icon--edit"></i></a>
+                        <?php if (@$parent): ?><i class="trigger-unlink-line icon icon--gray icon--unlink"></i><?php endif ?>
+                        <i class="trigger-delete-line icon icon--gray icon--times"></i>
+                    </td>
+                <?php endif ?>
             </tr>
         <?php endforeach ?>
     </tbody>
 </table>
-
-<nav>
-    <?php foreach ($types as $_type): ?>
-       <a href="<?= addlink($_type, @$defaultgroup, @$groupfield, @$defaultgroup, @$parent_query, @$prepop) ?>"><i class="icon icon--gray icon--plus"></i> <i class="icon icon--gray icon--<?= Linetype::load(AUTH_TOKEN, $_type)->icon ?>"></i></a>
-    <?php endforeach ?>
-</nav>
