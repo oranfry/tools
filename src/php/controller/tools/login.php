@@ -1,20 +1,24 @@
 <?php
 $message = null;
 
-if (AUTH_TOKEN) {
+if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
     error_log('Unexpectedly, token is already present');
     die();
 }
 
-if (@$_COOKIE['token'] && Blends::verify_token($_COOKIE['token'])) {
-    $landingpage = @BlendsConfig::get($_COOKIE['token'])->landingpage;
+if (@$_COOKIE['token']) {
 
-    if (!$landingpage) {
-        error_response('No landing page defined');
+    $api = new ApiClient($_COOKIE['token'], APIURL);
+
+    if ($api->touch()) {
+        if (!$landingpage = @Config::get()->landingpage) {
+            error_response('No landing page defined');
+        }
+
+        header('Location: ' . $landingpage);
+
+        die('Redirecting to ' . $landingpage . '...');
     }
-
-    header('Location: ' . $landingpage);
-    die('Redirecting...');
 }
 
 return [];

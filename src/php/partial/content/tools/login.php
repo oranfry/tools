@@ -1,5 +1,5 @@
 <div class="login-page">
-    <h1><?= BlendsConfig::get(AUTH_TOKEN)->instance_name ?: 'Blends' ?></h1>
+    <h1>Tools</h1>
     <form id="loginform">
         <div class="cred-line">
             <p>Username</p>

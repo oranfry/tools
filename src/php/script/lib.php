@@ -144,11 +144,6 @@ function hue2rgb($p, $q, $t)
     return $p;
 }
 
-function init_tools()
-{
-    set_highlight(@BlendsConfig::get()->highlight ?: REFCOL);
-}
-
 function postroute_tools()
 {
     switch (AUTHSCHEME) {
@@ -181,7 +176,11 @@ function postroute_tools()
     if (
         in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])
         &&
-        (!AUTH_TOKEN || !Blends::verify_token(AUTH_TOKEN))
+        (
+            !AUTH_TOKEN
+            ||
+            !(new ApiClient(AUTH_TOKEN, APIURL))->touch()
+        )
     ) {
         doover();
     }
