@@ -1,4 +1,11 @@
 /* General Page Stuff */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 html, body {
     color: #333;
     font-size: 14px;
