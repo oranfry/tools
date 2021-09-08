@@ -432,27 +432,46 @@ textarea {
 */* close commented backslash hack */
 
 
-/* Messages */
+/* Flash Messages */
 
-.message, .warning, .error {
-    display: inline-block;
-    padding: 0.4em;
-    margin-bottom: 0.4em;
+.flash {
+    margin: 1em 0;
 }
 
-.error {
+.flash:empty {
+    display: none;
+}
+
+.flash .flash__message {
+    display: inline-block;
+    padding: 0.5em;
+    margin-bottom: 0.4em;
+    background: #eee;
+    border: 1px solid #ccc;
+}
+
+.flash .flash__message.flash__message:not(:last-child) {
+    margin-right: 1em;
+}
+
+.flash .flash__message.flash__message--info {
+    background: #def;
+    border: 1px solid #cde;
+}
+
+.flash .flash__message.flash__message--success {
+    background: #dfd;
+    border: 1px solid #cec;
+}
+
+.flash .flash__message.flash__message--warning {
+    background: #fed;
+    border: 1px solid #edc;
+}
+
+.flash .flash__message.flash__message--error {
     border: 1px solid #cc9696;
     background-color: #f9c0c0;
-}
-
-.warning {
-    border: 1px solid #d7d36b;
-    background-color: #f9f698;
-}
-
-.message {
-    border: 1px solid #22e9cd;
-    background-color: #77fff0;
 }
 
 /* Calendar view styles */

@@ -37,17 +37,3 @@ tr.deleted:hover td {
     display: inline-block;
     padding: 1em;
 }
-
-.message {
-    background: #dfd;
-    border: 1px solid #cec;
-    padding: 0.5em;
-    display: inline-block;
-}
-
-.warning {
-    background: #fed;
-    border: 1px solid #edc;
-    padding: 0.5em;
-    display: inline-block;
-}
