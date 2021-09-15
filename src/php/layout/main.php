@@ -11,7 +11,6 @@
     <?php require search_plugins('src/php/partial/tools/nav.php'); ?>
     <div class="wrapper">
         <?php if (BACK): ?><br><div class="only-super1200"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php endif ?>
-        <h3><?= $title ?? PAGE ?></h3>
         <div class="flash"><?php foreach (is_array(@$flash) ? $flash : [] as $message): ?>
             <div class="flash__message <?= @$message->type ? "flash__message--{$message->type}" : null ?>"><?= $message->message ?></div>
         <?php endforeach ?></div>

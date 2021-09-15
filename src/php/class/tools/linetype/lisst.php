@@ -28,7 +28,7 @@ class lisst extends \Linetype
                 'label' => 'listitems',
                 'linetype' => 'listitem',
                 'rel' => 'many',
-                'parent_link' => 'listlistitem',
+                'tablelink' => 'listlistitem',
             ],
         ];
     }
