@@ -65,7 +65,7 @@
     });
 
     $('.trigger-logout').on('click', function(){
-        if (!confirm('Logout ' + username + '?')) {
+        if (!confirm('Logout?')) {
             return;
         }
 
