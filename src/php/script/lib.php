@@ -179,7 +179,7 @@ function postroute_tools()
         (
             !AUTH_TOKEN
             ||
-            !(new ApiClient(AUTH_TOKEN, APIURL))->touch()
+            !(ApiClient::http(AUTH_TOKEN, APIURL))->touch()
         )
     ) {
         doover();

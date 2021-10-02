@@ -7,8 +7,7 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
 }
 
 if (@$_COOKIE['token']) {
-
-    $api = new ApiClient($_COOKIE['token'], APIURL);
+    $api = ApiClient::http($_COOKIE['token'], APIURL);
 
     if ($api->touch()) {
         if (!$landingpage = @Config::get()->landingpage) {

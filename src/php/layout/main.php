@@ -1,4 +1,4 @@
-<?php $api = new ApiClient(AUTH_TOKEN, APIURL); ?>
+<?php $api = ApiClient::http(AUTH_TOKEN, APIURL); ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
