@@ -26,13 +26,6 @@ function adjustBrightness($hex, $steps)
     return $return;
 }
 
-function doover()
-{
-    setcookie('token', '', time() - 3600);
-    header('Location: /');
-    die();
-}
-
 function get_flat_list($name)
 {
     $lists = Blend::load(AUTH_TOKEN, 'lists')->search(AUTH_TOKEN, [(object)['field' => 'name', 'cmp' => '=', 'value' => $name]]);
@@ -146,31 +139,33 @@ function hue2rgb($p, $q, $t)
 
 function postroute_tools()
 {
-    switch (AUTHSCHEME) {
-        case 'header':
-            define('AUTH_TOKEN', @getallheaders()['X-Auth']);
+    if (!defined('AUTH_TOKEN')) {
+        switch (AUTHSCHEME) {
+            case 'header':
+                define('AUTH_TOKEN', @getallheaders()['X-Auth']);
 
-            break;
-        case 'cookie':
-            define('AUTH_TOKEN', @$_COOKIE['token']);
+                break;
+            case 'cookie':
+                define('AUTH_TOKEN', @$_COOKIE['token']);
 
-            break;
-        case 'pre':
-            break;
-        case 'none':
-            define('AUTH_TOKEN', null);
+                break;
+            case 'pre':
+                break;
+            case 'none':
+                define('AUTH_TOKEN', null);
 
-            break;
-        case 'onetime':
-            define('AUTH_TOKEN', Blends::login(USERNAME, PASSWORD, true));
+                break;
+            case 'onetime':
+                define('AUTH_TOKEN', Blends::login(USERNAME, PASSWORD, true));
 
-            break;
-        case 'deny':
-            error_response('Access Denied', 403);
+                break;
+            case 'deny':
+                error_response('Access Denied', 403);
 
-        default:
-            error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
-            error_response('Internal Server Error', 500);
+            default:
+                error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
+                error_response('Internal Server Error', 500);
+        }
     }
 
     if (
