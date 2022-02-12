@@ -1,4 +1,8 @@
 <?php
+
+use jars\client\HttpClient;
+use subsimple\Config;
+
 $message = null;
 
 if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
@@ -7,7 +11,8 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
 }
 
 if (@$_COOKIE['token']) {
-    $api = ApiClient::http($_COOKIE['token'], APIURL);
+    $api = HttpClient::of(APIURL);
+    $api->token($_COOKIE['token']);
 
     if ($api->touch()) {
         if (!$landingpage = @Config::get()->landingpage) {

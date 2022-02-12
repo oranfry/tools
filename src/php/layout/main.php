@@ -1,9 +1,8 @@
-<?php $api = ApiClient::http(AUTH_TOKEN, APIURL); ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
     <meta name="viewport" content="width=320, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/css/styles.<?= latest('css') ?>.css">
+    <link rel="stylesheet" type="text/css" href="/build/css/styles.<?= latest('css') ?>.css">
     <meta charset="utf-8"/>
     <title><?= @$title ?? PAGE ?></title>
 </head>
@@ -18,7 +17,7 @@
         <?php require search_plugins('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php'); ?>
     </div>
 
-    <script type="text/javascript" src="/js/app.<?= latest('js') ?>.js"></script>
+    <script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script>
     <?php @include APP_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
 </body>
 </html>

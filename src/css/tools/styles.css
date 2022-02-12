@@ -532,7 +532,7 @@ textarea {
 }
 
 .calendar-month .eventrow {
-    background: url(/img/calendar-eventrow-bg.png) repeat-y center center;
+    background: url(/build/img/calendar-eventrow-bg.png) repeat-y center center;
     background-size: 100%;
 }
 

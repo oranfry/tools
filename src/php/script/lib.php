@@ -1,5 +1,7 @@
 <?php
 
+use jars\client\HttpClient;
+
 define('REFCOL', 'd8b0b0');
 define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
 
@@ -156,7 +158,7 @@ function postroute_tools()
 
                 break;
             case 'onetime':
-                define('AUTH_TOKEN', Blends::login(USERNAME, PASSWORD, true));
+                define('AUTH_TOKEN', HttpClient::of(APIURL)->login(USERNAME, PASSWORD));
 
                 break;
             case 'deny':
@@ -168,16 +170,19 @@ function postroute_tools()
         }
     }
 
-    if (
-        in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])
-        &&
-        (
-            !AUTH_TOKEN
-            ||
-            !(ApiClient::http(AUTH_TOKEN, APIURL))->touch()
-        )
-    ) {
-        doover();
+    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])) {
+        if (!AUTH_TOKEN) {
+            doover();
+        }
+
+        global $jars;
+
+        $jars = HttpClient::of(APIURL);
+        $jars->token(AUTH_TOKEN);
+
+        if (!$jars->touch()) {
+            doover();
+        }
     }
 }
 

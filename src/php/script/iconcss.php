@@ -16,10 +16,10 @@ with_plugins(function($pdir, $name) use ($latests){
 
         $icon = $groups[1];
 
-        echo ".icon--{$icon} { background-image: url(/img/icon/{$icon}.{$latests['icon']}.png); }\n";
+        echo ".icon--{$icon} { background-image: url(/build/img/icon/{$icon}.{$latests['icon']}.png); }\n";
     }
 
     closedir($handle);
 
-    echo "input[type=\"checkbox\"]:checked { background-image: url(/img/icon/tick.{$latests['icon']}.png); }\n";
+    echo "input[type=\"checkbox\"]:checked { background-image: url(/build/img/icon/tick.{$latests['icon']}.png); }\n";
 });
