@@ -5,5 +5,8 @@
         "psr-4": {
             "tools\\": "src/php/class/tools"
         }
+    },
+    "require": {
+        "oranfry\/obex": "*"
     }
 }
