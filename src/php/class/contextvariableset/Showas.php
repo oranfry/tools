@@ -6,11 +6,12 @@ class Showas extends \ContextVariableSet
     public $value;
     public $options = [];
     public static $icons = [
-        'graph' => 'linegraph',
-        'pie' => 'piegraph',
-        'list' => 'list',
-        'summaries' => 'sigma',
         'calendar' => 'calendar',
+        'graph' => 'linegraph',
+        'list' => 'list',
+        'pie' => 'piegraph',
+        'spending' => 'dollar',
+        'summaries' => 'sigma',
     ];
 
 
