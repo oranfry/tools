@@ -1,15 +1,18 @@
 <?php
+
 abstract class ContextVariableSet
 {
     protected static $library = [];
 
-    public $prefix;
-    public $label;
-    public $vars = [];
+    public string $prefix;
+    public array $default_data;
+    public ?string $label;
+    public array $vars = [];
 
-    public function __construct($prefix)
+    public function __construct(string $prefix, array $default_data = [])
     {
         $this->prefix = $prefix;
+        $this->default_data = $default_data;
     }
 
     abstract public function display();
@@ -20,31 +23,25 @@ abstract class ContextVariableSet
 
     protected function getRawData()
     {
-        foreach (getallheaders() as $hname => $hvalue) {
-            if ($hname == 'X-Cvs') {
-                $fromheaders = [];
-                $cvsheaders = explode(',', $hvalue);
+        $data = $this->default_data;
 
-                foreach ($cvsheaders as $rawheader) {
-                    list($fname, $fvalue) = explode('=', $rawheader, 2);
-                    list($fmajor, $fminor) = explode('__', $fname, 2);
+        if ($hvalue = getallheaders()['X-Cvs'] ?? null) {
+            foreach (explode(',', $hvalue) as $rawheader) {
+                [$fname, $fvalue] = explode('=', $rawheader, 2);
+                [$fmajor, $fminor] = explode('__', $fname, 2);
 
-                    if ($fmajor == $this->prefix) {
-                        $fromheaders[$fminor] = str_replace('|', ',', $fvalue);
-                    }
+                if ($fmajor == $this->prefix) {
+                    $data[$fminor] = str_replace('|', ',', $fvalue);
                 }
-
-                return $fromheaders;
             }
-        }
+        } else {
+            $prefix_du = $this->prefix . '__';
 
-        $data = [];
-
-        $prefix_du = $this->prefix . '__';
-        foreach ($_GET as $qname => $qvalue) {
-            if (strpos($qname, $prefix_du) === 0) {
-                $name = substr($qname, strlen($prefix_du));
-                $data[$name] = $qvalue;
+            foreach ($_GET as $qname => $qvalue) {
+                if (strpos($qname, $prefix_du) === 0) {
+                    $name = substr($qname, strlen($prefix_du));
+                    $data[$name] = $qvalue;
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace contextvariableset;
 
 class Showas extends \ContextVariableSet
@@ -15,9 +16,9 @@ class Showas extends \ContextVariableSet
     ];
 
 
-    public function __construct($prefix)
+    public function __construct(string $prefix, array $default_data = [])
     {
-        parent::__construct($prefix);
+        parent::__construct($prefix, $default_data);
 
         $data = $this->getRawData();
 

@@ -6,9 +6,9 @@ class Value extends \ContextVariableSet
     public $value;
     public $options;
 
-    public function __construct($prefix)
+    public function __construct(string $prefix, array $default_data = [])
     {
-        parent::__construct($prefix);
+        parent::__construct($prefix, $default_data);
 
         $data = $this->getRawData();
 

@@ -1,4 +1,5 @@
 <?php
+
 class CvsPeriod extends ContextVariableSet
 {
     public $vars = [

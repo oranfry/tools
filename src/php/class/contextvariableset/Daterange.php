@@ -1,25 +1,33 @@
 <?php
+
 namespace contextvariableset;
 
-use Config;
-use Period;
-use ContextVariableSet;
-use BlendsConfig;
+use subsimple\Period;
+use subsimple\ContextVariableSet;
 
 class Daterange extends \ContextVariableSet
 {
+    public $from;
     public $period;
+    public $periods;
     public $rawrawfrom;
     public $rawto;
-    public $from;
     public $to;
+    public bool $allow_custom;
 
-    public function __construct($prefix)
+    public function __construct(string $prefix, array $default_data = [])
     {
-        parent::__construct($prefix);
+        $this->periods = $default_data['periods'] ?? ['day'];
+        $this->allow_custom = $default_data['allow_custom'] ?? true;
+
+        unset($default_data['periods'], $default_data['allow_custom']);
+
+        parent::__construct($prefix, $default_data);
 
         $data = $this->getRawData();
-        $this->period = @$data['period'] ?: BlendsConfig::get(AUTH_TOKEN)->periods[0];
+
+        $this->period = $data['period'] ?? reset($this->periods);
+
         $current_period = Period::load($this->period);
 
         if (@$data['rawto']) {
@@ -40,22 +48,23 @@ class Daterange extends \ContextVariableSet
 
     public function display()
     {
-        $current_period = Period::load($this->period);
+        if ($this->period) {
+            $current_period = Period::load($this->period);
 
-        if (!@$current_period->suppress_nav) {
-            extract($this->computeDates());
+            if (!@$current_period->suppress_nav) {
+                extract($this->computeDates());
+            }
         }
-
         ?>
             <div class="navset">
                 <div class="inline-rel">
                     <div class="inline-modal">
                         <div class="nav-dropdown nav-dropdown--always">
-                             <?php foreach (BlendsConfig::get(AUTH_TOKEN)->periods as $period): ?>
+                             <?php foreach ($this->periods as $period): ?>
                                 <?php $current = (!$this->rawto && $period == $this->period); ?>
                                 <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
                             <?php endforeach ?>
-                            <?php if (!@$current_period->suppress_custom): ?>
+                            <?php if ($this->allow_custom && !@$current_period->suppress_custom): ?>
                                 <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
                             <?php endif ?>
                             <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>; margin-bottom: 0.5em">

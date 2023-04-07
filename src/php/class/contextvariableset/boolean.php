@@ -1,4 +1,7 @@
 <?php
+
+namespace contextvariableset;
+
 class CvsBool extends ContextVariableSet
 {
     public $vars = [
