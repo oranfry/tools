@@ -15,4 +15,3 @@
 <?php else: ?>
     <input class="field value" type="text" name="<?= $field->name ?>" value="<?= $value ?>" autocomplete="off">
 <?php endif ?>
-
