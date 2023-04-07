@@ -111,16 +111,31 @@
         return data;
     };
 
-    window.changeInstance = function() {
-        var base = location.href.split('?')[0];
-        var data = getQueryParams();
+    window.getRefreshLink = function () {
+        var data = Object.fromEntries(new FormData($instanceform[0]));
 
+        // remove nullish
+        for (var prop in data) {
+            if (Object.prototype.hasOwnProperty.call(data, prop)) {
+                if (!data[prop]) {
+                    delete data[prop];
+                }
+            }
+        }
+
+        delete data.back;
         delete data._returnurl;
 
         var query = $.param(data);
-        var link = base + (query && '?' || '') + query;
+        return window.location.pathname + (query && '?' || '') + query;
+    }
 
-        window.location.href = link;
+    window.changeInstance = function() {
+        window.location.href = getRefreshLink();
+    };
+
+    window.softChangeInstance = function() {
+        window.history.replaceState({}, document.title, getRefreshLink());
     };
 
     window.getFiltersQuery = function() {
