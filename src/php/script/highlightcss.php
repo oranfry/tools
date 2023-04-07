@@ -6,8 +6,13 @@ tr.today td,
 .periodchoice.periodchoice--current,
 .nav-dropdown a.current,
 .drnav.current,
-.cv-manip.current {
+.cv-manip.current,
+.navbar .listable a.current {
     background-color: #<?= HIGHLIGHT ?>;
+}
+
+.navbar .listable a.current {
+    color: #333;
 }
 
 .button.button--main {
