@@ -2,7 +2,9 @@
 
 use jars\client\HttpClient;
 
-define('REFCOL', 'd8b0b0');
+const REF_SATURATION = 0.4;
+const REF_LIGHTNESS = 0.73;
+
 define('BACK', @$_GET['back'] ? base64_decode($_GET['back']) : null);
 
 function adjustBrightness($hex, $steps)
@@ -110,9 +112,9 @@ function hslToHex($hsl)
         $q = $l < 0.5 ? $l * (1 + $s) : $l + $s - $l * $s;
         $p = 2 * $l - $q;
 
-        $r = hue2rgb($p, $q, $h + 1/3);
+        $r = hue2rgb($p, $q, $h + 1 / 3);
         $g = hue2rgb($p, $q, $h);
-        $b = hue2rgb($p, $q, $h - 1/3);
+        $b = hue2rgb($p, $q, $h - 1 / 3);
     }
 
     return rgb2hex($r) . rgb2hex($g) . rgb2hex($b);
@@ -123,17 +125,21 @@ function hue2rgb($p, $q, $t)
     if ($t < 0) {
         $t += 1;
     }
+
     if ($t > 1) {
         $t -= 1;
     }
-    if ($t < 1/6) {
+
+    if ($t < 1 / 6) {
         return $p + ($q - $p) * 6 * $t;
     }
-    if ($t < 1/2) {
+
+    if ($t < 1 / 2) {
         return $q;
     }
-    if ($t < 2/3) {
-        return $p + ($q - $p) * (2/3 - $t) * 6;
+
+    if ($t < 2 / 3) {
+        return $p + ($q - $p) * (2 / 3 - $t) * 6;
     }
 
     return $p;
@@ -188,13 +194,10 @@ function postroute_tools()
 
 function rgb2hex($rgb)
 {
-    return str_pad(dechex($rgb * 255), 2, '0', STR_PAD_LEFT);
+    return str_pad(dechex((int) ($rgb * 255)), 2, '0', STR_PAD_LEFT);
 }
 
-function set_highlight($hex)
+function set_highlight($hue)
 {
-    list($h) = hexToHsl($hex);
-    list(, $s, $l) = hexToHsl(REFCOL);
-
-    define('HIGHLIGHT', hslToHex([$h, $s, $l]));
+    define('HIGHLIGHT', hslToHex([$hue, REF_SATURATION, REF_LIGHTNESS]));
 }
