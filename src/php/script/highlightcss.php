@@ -1,3 +1,4 @@
+<?php $highlight = @constant('HIGHLIGHT') ?: '#ff0000'; ?>
 .appcolor-bg,
 .button.button--main,
 nav a.current,
@@ -8,7 +9,7 @@ tr.today td,
 .drnav.current,
 .cv-manip.current,
 .navbar .listable a.current {
-    background-color: #<?= HIGHLIGHT ?>;
+    background-color: #<?= $highlight ?>;
 }
 
 .navbar .listable a.current {
@@ -16,5 +17,5 @@ tr.today td,
 }
 
 .button.button--main {
-    border: 1px solid #<?= adjustBrightness(HIGHLIGHT, -60) ?>
+    border: 1px solid #<?= adjustBrightness($highlight, -60) ?>
 }

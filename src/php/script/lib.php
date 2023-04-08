@@ -201,3 +201,10 @@ function set_highlight($hue)
 {
     define('HIGHLIGHT', hslToHex([$hue, REF_SATURATION, REF_LIGHTNESS]));
 }
+
+function doover()
+{
+    setcookie('token', '', time() - 3600);
+    header('Location: /');
+    die();
+}
