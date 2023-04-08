@@ -149,6 +149,10 @@ body.wsidebar .wrapper {
     filter: brightness(0.8);
 }
 
+.icon.icon--muted, .icon.disabled, .disabled .icon {
+    opacity: 50%;
+}
+
 td > .icon, td > a > .icon {
     position: relative;
     top: 0.2em;
@@ -851,6 +855,10 @@ input[type="number"]::-webkit-inner-spin-button {
 .nav-dropdown--always > a, .nav-dropdown--always .nav-dropdown__item {
     display: block;
     padding: 0.2em 1em;
+}
+
+.navbar a.disabled {
+    cursor: default;
 }
 
 .graph-label {
