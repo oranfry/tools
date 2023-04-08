@@ -11,10 +11,8 @@
                     <input type="text" name="token" value="<?= AUTH_TOKEN ?>" style="width: 100%; padding: 0.5em">
                 </form>
             </div>
-            <i class="icon icon--gray icon--ticket inline-modal-trigger"></i>
+            <a href="#" class="inline-modal-trigger"><i class="icon icon--gray icon--ticket"></i></a>
         </div>
-        <?php if (AUTH_TOKEN): ?>
-            <i class="icon icon--gray icon--leave trigger-logout" title="Logout"></i>
-        <?php endif ?>
+        <a href="#" class="trigger-logout <?php if (!AUTH_TOKEN): ?>disabled<?php endif ?>"><i class="icon icon--gray icon--leave" title="Logout"></i></a>
     </div>
 </div>

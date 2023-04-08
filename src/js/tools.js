@@ -64,7 +64,9 @@
         );
     });
 
-    $('.trigger-logout').on('click', function(){
+    $('.trigger-logout').on('click', function(e){
+        e.preventDefault();
+
         if (!confirm('Logout?')) {
             return;
         }
@@ -270,13 +272,13 @@
     });
 
     $('.inline-modal-trigger, .nav-modal-trigger').on('click', function(e){
+        e.preventDefault();
+
         var prefix = 'inline';
 
         if ($(this).is('.nav-modal-trigger')) {
             prefix = 'nav';
         }
-
-        e.preventDefault();
 
         var done = false;
 
