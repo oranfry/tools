@@ -58,20 +58,47 @@
     $('#loginform').on('submit', function(e){
         e.preventDefault();
 
-        blends_api.login(
-            $(this).find('[name="username"]').val(),
-            $(this).find('[name="password"]').val()
-        );
+        $.ajax('/ajax/login', {
+            method: 'post',
+            contentType: false,
+            processData: false,
+            data: JSON.stringify({username: $(this).find('[name="username"]').val(), password: $(this).find('[name="password"]').val()}),
+            success: function(data) {
+                if (typeof data.token != 'undefined') {
+                    setCookie('token', data.token);
+                    window.location.reload();
+                } else {
+                    alert(data.error || 'Unknown error');
+                }
+            },
+            error: function(data){
+                alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
+            }
+        });
     });
 
     $('.trigger-logout').on('click', function(e){
         e.preventDefault();
 
-        if (!confirm('Logout?')) {
+        if (!getCookie('token') || !confirm('Logout?')) {
             return;
         }
 
-        blends_api.logout();
+        $.ajax('/ajax/logout', {
+            method: 'post',
+            contentType: false,
+            processData: false,
+            beforeSend: function(request) {
+                request.setRequestHeader("X-Auth", getCookie('token'));
+            },
+            success: function(data) {
+                deleteCookie('token');
+                window.location.href = '/';
+            },
+            error: function(data){
+                alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
+            }
+        });
     });
 
     $('#tokenform').on('submit', function(e){
