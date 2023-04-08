@@ -67,13 +67,13 @@ class Daterange extends \ContextVariableSet
                             <?php if ($this->allow_custom && !@$current_period->suppress_custom): ?>
                                 <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
                             <?php endif ?>
-                            <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>; margin-bottom: 0.5em">
-                                <input class="cv-surrogate cv-manip" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=" style="width: 6em"><br>
+                            <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>">
+                                <input class="cv-surrogate cv-manip" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=" style="margin: 0.5em; width: 7em">
                             </div>
                             <div class="custom-daterange" style="<?= $this->rawto ? '' : 'display: none' ?>">
-                                <input class="cv-surrogate cv-manip no-autosubmit" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=<?= $this->to ?>" style="width: 6em"><br>
+                                <input class="cv-surrogate cv-manip no-autosubmit" data-for="<?= $this->prefix ?>__rawrawfrom" type="text" value="<?= $this->from ?>" data-manips="<?= $this->prefix ?>__rawto=<?= $this->to ?>" style="margin: 0.5em; width: 7em"><br>
                                 to<br>
-                                <input class="cv-surrogate no-autosubmit" data-for="<?= $this->prefix ?>__rawto" type="text" value="<?= $this->rawto ?: $this->to ?>" style="width: 6em"><br>
+                                <input class="cv-surrogate no-autosubmit" data-for="<?= $this->prefix ?>__rawto" type="text" value="<?= $this->rawto ?: $this->to ?>" style="margin: 0.5em; width: 7em"><br>
                                 <a class="cv-manip" data-manips="">Apply</a>
                             </div>
                         </div>
