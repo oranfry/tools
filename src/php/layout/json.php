@@ -8,4 +8,8 @@ if (isset($error)) {
     return;
 }
 
+foreach (@$headers ?? [] as $header => $value) {
+    header($header . ': ' . $value);
+}
+
 echo json_encode(@$data ?: []);
