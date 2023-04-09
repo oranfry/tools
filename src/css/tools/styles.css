@@ -840,7 +840,7 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 0.1em 0.4em;
 }
 
-.nav-dropdown a, .nav-dropdown .nav-dropdown__item {
+.nav-dropdown a, .nav-dropdown h4, .nav-dropdown .nav-dropdown__item {
     white-space: nowrap;
     text-decoration: none;
     color: #444;
@@ -1117,11 +1117,15 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 0.2em;
     }
 
-    .navbar .listable a {
+    .navbar .listable a, .navbar .listable h4 {
         display: block;
         text-decoration: none;
         color: #333;
         padding: 0.3em;
+    }
+
+    .navbar .listable h4:not(:first-child) {
+        margin-top: 1em;
     }
 
     .navbar .listable a.current {

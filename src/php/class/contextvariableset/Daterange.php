@@ -3,7 +3,6 @@
 namespace contextvariableset;
 
 use subsimple\Period;
-use subsimple\ContextVariableSet;
 
 class Daterange extends \ContextVariableSet
 {
