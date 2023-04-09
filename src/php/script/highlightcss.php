@@ -1,4 +1,4 @@
-<?php $highlight = @constant('HIGHLIGHT') ?: '#ff0000'; ?>
+<?php $highlight = defined('HIGHLIGHT') ? HIGHLIGHT : '#ff0000'; ?>
 .appcolor-bg,
 .button.button--main,
 nav a.current,
