@@ -513,18 +513,16 @@
     });
 })();
 
-(function(){
+(function() {
+    // Graphs
+
+    var $canvas = $('#bg');
+
     var onResize = function() {
         var width = Math.floor(window.innerWidth - 200 - (window.innerWidth >= 800 && 238 || 0));
         var height = Math.floor(window.innerHeight - 200);
 
         $('#bg-container').css({width: width + 'px', height: height + 'px'});
-
-        var $canvas = $('#bg');
-
-        if (!$canvas.length) {
-            return;
-        }
 
         $canvas.attr('width', width).attr('height', height);
 
@@ -579,19 +577,30 @@
             ctx.stroke();
         }
 
-        ctx.strokeStyle = "#333333";
         ctx.lineWidth = 1;
         ctx.lineJoin = 'round';
-        ctx.beginPath();
 
-        ctx.moveTo(width * points[0][0] + 1, height * (1 - points[0][1]) + 1);
+        var seriesNum = 0;
 
-        for (var i = 1; i < points.length; i++) {
-            ctx.lineTo(Math.round(width * points[i][0] + 1), Math.round(height * (1 - points[i][1]) + 1));
-            ctx.stroke();
+        for (const seriesName in graphSeries) {
+            var points = graphSeries[seriesName].points;
+            var color = graphSeries[seriesName].color;
+
+            ctx.strokeStyle = '#' + color;
+            ctx.beginPath();
+            ctx.moveTo(width * points[0][0] + 1, height * (1 - points[0][1]) + 1);
+
+            for (var i = 1; i < points.length; i++) {
+                ctx.lineTo(Math.round(width * points[i][0] + 1), Math.round(height * (1 - points[i][1]) + 1));
+                ctx.stroke();
+            }
+
+            seriesNum++;
         }
     };
 
-    $(window).on('resize', onResize);
-    onResize();
+    if ($canvas.length && window.graphSeries) {
+        $(window).on('resize', onResize);
+        onResize();
+    }
 })();

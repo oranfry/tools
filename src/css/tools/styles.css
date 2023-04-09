@@ -872,12 +872,16 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-top: 0.7em;
 }
 
+.graph-label.graph-label--bump-down2 {
+    margin-top: 2.2em;
+}
+
 .graph-label.graph-label--bump-up {
     margin-top: -0.7em;
 }
 
 .graph-label.graph-label--bump-up2 {
-    margin-top: -1.7em;
+    margin-top: -2.2em;
 }
 
 .graph-label.graph-label--bump-left {
@@ -887,7 +891,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .graph-label.graph-label--bump-right {
     margin-left: 1em;
 }
-
 
 @media screen {
     nav a span, .event img {
