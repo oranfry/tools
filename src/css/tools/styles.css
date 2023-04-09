@@ -655,7 +655,7 @@ textarea {
     width: 50%;
 }
 
-.form-row__value > input[type="checkbox"]:first-child {
+.form-row__value > input[type="checkbox"].includeme:first-child {
     position: absolute;
     left: 0;
 }
