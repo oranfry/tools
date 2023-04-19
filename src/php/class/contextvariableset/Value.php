@@ -8,6 +8,10 @@ class Value extends \ContextVariableSet
 
     public function __construct(string $prefix, array $default_data = [])
     {
+        $this->options = $default_data['options'] ?? null;
+
+        unset($default_data['options']);
+
         parent::__construct($prefix, $default_data);
 
         $data = $this->getRawData();
