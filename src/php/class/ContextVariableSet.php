@@ -91,8 +91,8 @@ abstract class ContextVariableSet
             $data[$this->prefix . '__' . $name] = $value;
         }
 
-        $data = array_filter($data, function($e){ return (bool) $e; });
+        $data = array_filter($data);
 
-        return implode('&', array_map(function($v, $k){ return "{$k}={$v}"; }, array_values($data), array_keys($data)));
+        return implode('&', array_map(fn ($v, $k) => "{$k}={$v}", array_values($data), array_keys($data)));
     }
 }
