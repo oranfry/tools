@@ -7,6 +7,7 @@ use subsimple\Period;
 class Daterange extends \ContextVariableSet
 {
     public $from;
+    public $current_period;
     public $period;
     public $periods;
     public $rawrawfrom;
@@ -27,7 +28,7 @@ class Daterange extends \ContextVariableSet
 
         $this->period = $data['period'] ?? reset($this->periods);
 
-        $current_period = Period::load($this->period);
+        $this->current_period = Period::load($this->period);
 
         if (@$data['rawto']) {
             $this->rawrawfrom = $data['rawrawfrom'];
@@ -36,24 +37,17 @@ class Daterange extends \ContextVariableSet
             $this->to = $data['rawto'];
         } else {
             $this->rawrawfrom = @$data['rawrawfrom'] ?: date('Y-m-d');
-            $rawfrom = $current_period->rawstart($this->rawrawfrom);
-            $this->from = $current_period->start($rawfrom);
+            $rawfrom = $this->current_period->rawstart($this->rawrawfrom);
+            $this->from = $this->current_period->start($rawfrom);
 
-            if ($current_period->step) {
-                $this->to = date_shift($current_period->start(date_shift($rawfrom, "+{$current_period->step}")), '-1 day');
+            if ($this->current_period->step) {
+                $this->to = date_shift($this->current_period->start(date_shift($rawfrom, "+{$this->current_period->step}")), '-1 day');
             }
         }
     }
 
     public function display()
     {
-        if ($this->period) {
-            $current_period = Period::load($this->period);
-
-            if (!@$current_period->suppress_nav) {
-                extract($this->computeDates());
-            }
-        }
         ?>
             <div class="navset">
                 <div class="inline-rel">
@@ -63,7 +57,7 @@ class Daterange extends \ContextVariableSet
                                 <?php $current = (!$this->rawto && $period == $this->period); ?>
                                 <a class="<?= $current ? 'current' : '' ?>" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['period' => $period, 'rawto' => null]); ?>"><?= Period::load($period)->navlabel ?></a>
                             <?php endforeach ?>
-                            <?php if ($this->allow_custom && !@$current_period->suppress_custom): ?>
+                            <?php if ($this->allow_custom && !@$this->current_period->suppress_custom): ?>
                                 <a class="open-custom-daterange <?= $this->rawto ? 'current' : '' ?>">Custom</a>
                             <?php endif ?>
                             <div class="standard-daterange" style="<?= $this->rawto ? 'display: none' : '' ?>">
@@ -77,8 +71,9 @@ class Daterange extends \ContextVariableSet
                             </div>
                         </div>
                     </div>
-                    <a class="inline-modal-trigger"><?= strtoupper($this->rawto ? 'c' : $current_period->id) ?></a>
-                    <?php if (!@$current_period->suppress_nav): ?>
+                    <a class="inline-modal-trigger"><?= strtoupper($this->rawto ? 'c' : $this->current_period->id) ?></a>
+                    <?php if (!@$this->current_period->suppress_nav): ?>
+                        <?php extract($this->computeDates()); ?>
                         <div class="drnav <?= $highlight[0] ?>"><a class="icon icon--gray icon--arrowleft" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $prevfrom]); ?>"></a></div>
                         <div class="drnav <?= $highlight[1] ?>"><a class="icon icon--gray icon--dot" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $currfrom]); ?>"></a></div>
                         <div class="drnav <?= $highlight[2] ?>"><a class="icon icon--gray icon--arrowright" href="<?= strtok($_SERVER['REQUEST_URI'], '?') . '?' . $this->constructQuery(['rawrawfrom'=> $nextfrom]); ?>"></a></div>
@@ -99,16 +94,14 @@ class Daterange extends \ContextVariableSet
 
     public function getTitle()
     {
-        $current_period = Period::load($this->period);
-
-        if (@$current_period->suppress_nav) {
-            return $current_period->navlabel;
+        if (@$this->current_period->suppress_nav) {
+            return $this->current_period->navlabel;
         }
 
         extract($this->computeDates());
 
         if ($inuse) {
-            return $current_period->label($this->from, $this->to);
+            return $this->current_period->label($this->from, $this->to);
         }
 
         return date('D j F Y', strtotime($this->from)) . ' ~ ' . date('D j F Y', strtotime($this->to));
@@ -116,19 +109,17 @@ class Daterange extends \ContextVariableSet
 
     public function computeDates()
     {
-        $current_period = Period::load($this->period);
-
-        $rawprevfrom = $current_period->rawstart(date_shift($this->from, "-{$current_period->step}"));
-        $rawcurrfrom = $current_period->rawstart(date('Y-m-d'));
-        $rawnextfrom = $current_period->rawstart(date_shift($this->from, "+{$current_period->step}"));
+        $rawprevfrom = $this->current_period->rawstart(date_shift($this->from, "-{$this->current_period->step}"));
+        $rawcurrfrom = $this->current_period->rawstart(date('Y-m-d'));
+        $rawnextfrom = $this->current_period->rawstart(date_shift($this->from, "+{$this->current_period->step}"));
 
         $result = [
-            'prevfrom' => $current_period->start($rawprevfrom),
-            'currfrom' => $current_period->start($rawcurrfrom),
-            'nextfrom' => $current_period->start($rawnextfrom),
-            'prevto' => date_shift($current_period->start(date_shift($rawprevfrom, "+{$current_period->step}")), '-1 day'),
-            'currto' => date_shift($current_period->start(date_shift($rawcurrfrom, "+{$current_period->step}")), '-1 day'),
-            'nextto' => date_shift($current_period->start(date_shift($rawnextfrom, "+{$current_period->step}")), '-1 day'),
+            'prevfrom' => $this->current_period->start($rawprevfrom),
+            'currfrom' => $this->current_period->start($rawcurrfrom),
+            'nextfrom' => $this->current_period->start($rawnextfrom),
+            'prevto' => date_shift($this->current_period->start(date_shift($rawprevfrom, "+{$this->current_period->step}")), '-1 day'),
+            'currto' => date_shift($this->current_period->start(date_shift($rawcurrfrom, "+{$this->current_period->step}")), '-1 day'),
+            'nextto' => date_shift($this->current_period->start(date_shift($rawnextfrom, "+{$this->current_period->step}")), '-1 day'),
             'highlight' => ['', '', ''],
         ];
 
