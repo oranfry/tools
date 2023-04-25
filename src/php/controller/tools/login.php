@@ -10,11 +10,11 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
     die();
 }
 
-if (@$_COOKIE['token']) {
-    $api = HttpClient::of(APIURL);
-    $api->token($_COOKIE['token']);
+if ($token = @$_COOKIE['token']) {
+    $jars = HttpClient::of(APIURL);
+    $jars->token($token);
 
-    if ($api->touch()) {
+    if ($jars->touch()) {
         if (!$landingpage = @Config::get()->landingpage) {
             error_response('No landing page defined');
         }
