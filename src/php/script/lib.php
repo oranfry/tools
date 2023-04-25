@@ -147,6 +147,10 @@ function hue2rgb($p, $q, $t)
 
 function postroute_tools()
 {
+    global $jars;
+
+    $jars = HttpClient::of(APIURL);
+
     if (!defined('AUTH_TOKEN')) {
         switch (AUTHSCHEME) {
             case 'header':
@@ -181,9 +185,6 @@ function postroute_tools()
             doover();
         }
 
-        global $jars;
-
-        $jars = HttpClient::of(APIURL);
         $jars->token(AUTH_TOKEN);
 
         if (!$jars->touch()) {
