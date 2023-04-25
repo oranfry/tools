@@ -1,6 +1,7 @@
 <?php
 
 use jars\client\HttpClient;
+use subsimple\Config;
 
 const REF_SATURATION = 0.4;
 const REF_LIGHTNESS = 0.73;
@@ -208,4 +209,11 @@ function doover()
     setcookie('token', '', time() - 3600);
     header('Location: /');
     die();
+}
+
+function init_tools()
+{
+    if ($hue = @Config::get()->highlight_hue) {
+        set_highlight($hue);
+    }
 }
