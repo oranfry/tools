@@ -58,14 +58,14 @@
     $('#loginform').on('submit', function(e){
         e.preventDefault();
 
-        $.ajax('/ajax/login', {
+        $.ajax('/ajax/auth/login', {
             method: 'post',
             contentType: false,
             processData: false,
             data: JSON.stringify({username: $(this).find('[name="username"]').val(), password: $(this).find('[name="password"]').val()}),
             success: function(data) {
-                if (typeof data.token != 'undefined') {
-                    setCookie('token', data.token);
+                if (typeof data == 'string') {
+                    setCookie('token', data);
                     window.location.reload();
                 } else {
                     alert(data.error || 'Unknown error');
@@ -84,7 +84,7 @@
             return;
         }
 
-        $.ajax('/ajax/logout', {
+        $.ajax('/ajax/auth/logout', {
             method: 'post',
             contentType: false,
             processData: false,
