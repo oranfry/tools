@@ -181,7 +181,7 @@ function postroute_tools()
         }
     }
 
-    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])) {
+    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre', 'onetime'])) {
         if (!AUTH_TOKEN) {
             doover();
         }
@@ -208,6 +208,9 @@ function doover()
 {
     setcookie('token', '', time() - 3600);
     header('Location: /');
+
+    echo "Please restart the login process\n";
+
     die();
 }
 
