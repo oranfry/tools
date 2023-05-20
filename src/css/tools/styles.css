@@ -675,7 +675,8 @@ textarea {
 }
 
 .noedit input[type="number"] {
-    -moz-appearance:textfield;
+    -moz-appearance:textfield !important;
+    appearance:textfield !important;
 }
 
 .noedit .fromtoday, .noedit .adhoc-toggle {
