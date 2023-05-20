@@ -1,11 +1,9 @@
 <?php if (@$options): ?>
-    <select name="<?= $field->name ?>" style="width: 80%" tabindex="1">
+    <select name="<?= $field->name ?>" style="width: 80%" tabindex="1" <?= @$field->readonly ? 'disabled' : null ?>>
         <?php if (!@$field->constrained || count($options) > 1): ?><option></option><?php endif ?>
         <?php foreach ($options as $k => $v): ?>
-            <?php
-                $_value = $v;
-                $_label = is_numeric($k) ? $v : $k;
-            ?>
+            <?php $_value = $v; ?>
+            <?php $_label = is_numeric($k) ? $v : $k; ?>
             <option <?= $_value == @$value ? 'selected="selected"' : '' ?> value="<?= $_value ?>"><?= $_label ?></option>
         <?php endforeach ?>
     </select>
@@ -13,5 +11,5 @@
         <button type="button" class="adhoc-toggle">&hellip;</button>
     <?php endif ?>
 <?php else: ?>
-    <input class="field value" type="text" name="<?= $field->name ?>" value="<?= $value ?>" autocomplete="off">
+    <input class="field value" type="text" name="<?= $field->name ?>" value="<?= $value ?>" autocomplete="off" <?= @$field->readonly ? 'disabled' : null ?>>
 <?php endif ?>

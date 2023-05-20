@@ -1,1 +1,1 @@
-<?php require __DIR__ . '/text.php';
+<?php require __DIR__ . '/string.php';

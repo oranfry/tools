@@ -1,1 +1,1 @@
-<input type="checkbox" class="field value" name="<?= $field->name ?>" <?php if ($value): ?>checked<?php endif ?>>
+<input type="checkbox" class="field value" name="<?= $field->name ?>" <?= @$value ? 'checked' : null ?> <?= @$field->readonly ? 'disabled' : null ?>>
