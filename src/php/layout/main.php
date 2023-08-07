@@ -1,3 +1,4 @@
+<?php use ContextVariableSets\ContextVariableSet; ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>

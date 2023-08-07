@@ -1,12 +1,12 @@
 {
-    "name": "oranfry/tools",
-    "version": "1.0.0",
     "autoload": {
         "psr-4": {
-            "": "src/php/class"
+            "tools\\": ""
         }
     },
+    "name": "oranfry/tools",
     "require": {
+        "oranfry/context-variable-sets": "*",
         "oranfry/obex": "*"
     }
 }
