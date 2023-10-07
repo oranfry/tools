@@ -6,7 +6,7 @@
     },
     "name": "oranfry/tools",
     "require": {
-        "oranfry/context-variable-sets": "*",
+        "oranfry/context-variable-sets": "^2.0.0",
         "oranfry/obex": "*",
         "oranfry/subsimple": "*"
     }
