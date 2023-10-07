@@ -1,3 +1,4 @@
 [
-    "src/js/tools/main.js"
+    "src/js/tools/main.js",
+    "src/js/context-variable-sets/main.js"
 ]

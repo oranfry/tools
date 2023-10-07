@@ -1,4 +1,3 @@
-<?php use ContextVariableSets\ContextVariableSet; ?>
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
@@ -8,7 +7,7 @@
     <title><?= @$title ?? PAGE ?></title>
 </head>
 <body class="wsidebar">
-    <?php ss_require('src/php/partial/tools/nav.php', $viewdata); ?>
+    <?php ss_require('src/php/partial/Tools/nav.php', $viewdata); ?>
     <div class="wrapper">
         <?php if (BACK): ?><br><div class="only-super1200"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php endif ?>
         <?php ss_include('src/php/partial/preflash/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata); ?>
@@ -18,13 +17,7 @@
         <?php ss_require('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata); ?>
     </div>
 
-    <form id="instanceform">
-        <div style="display: none;">
-            <?php foreach (ContextVariableSet::getAll() as $active) : ?><?php $active->inputs(); ?><?php endforeach ?>
-            <div id="new-vars-here"></div>
-        </div>
-    </form>
-
+    <?php \ContextVariableSets\ContextVariableSet::form(); ?>
     <script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script>
     <?php ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata); ?>
 </body>

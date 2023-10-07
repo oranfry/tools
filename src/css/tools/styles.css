@@ -77,26 +77,6 @@ body.wsidebar .wrapper {
     box-sizing: border-box;
 }
 
-.cvdump input, .cvdump span {
-    font-size: 11px;
-    display: inline;
-    background: transparent;
-    border: none;
-    color: #444;
-    padding: 0;
-    float: left;
-    width: 10em;
-    line-height: 1.5em;
-}
-
-.cvdump span {
-    clear: both;
-}
-
-.cvdump span:after {
-    content: ": ";
-}
-
 .applink {
     padding: 0;
     text-decoration: none;
@@ -690,15 +670,6 @@ textarea {
 a.incog {
     text-decoration: none;
     color: inherit;
-}
-
-.custom-daterange {
-    display: inline-block;
-}
-
-a.cv-manip, .open-custom-daterange {
-    cursor: pointer;
-    user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; -o-user-select: none;
 }
 
 .trigger-edit-line, .trigger-edit-record,

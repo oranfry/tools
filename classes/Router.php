@@ -1,6 +1,6 @@
 <?php
 
-namespace tools;
+namespace Tools;
 
 class Router extends \subsimple\Router
 {

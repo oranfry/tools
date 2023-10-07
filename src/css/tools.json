@@ -2,6 +2,7 @@
     "src/css/tools/styles.css",
     "src/css/tools/login.css",
     "src/css/tools/styles2.css",
+    "src/css/context-variable-sets/style.css",
     "php:src/php/script/iconcss.php",
     "php:src/php/script/highlightcss.php"
 ]

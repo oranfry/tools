@@ -1,5 +1,3 @@
-<?php $daterange = ContextVariableSet::get('daterange'); ?>
-
 <table class="easy-table">
     <thead>
         <tr>
