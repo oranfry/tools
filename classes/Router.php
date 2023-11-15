@@ -6,7 +6,7 @@ class Router extends \subsimple\Router
 {
     protected static $routes = [
         // login / logout
-        'GET /' => ['PAGE' => 'tools/login', 'AUTHSCHEME' => 'none', 'LAYOUT' => 'main'],
+        'GET /' => ['PAGE' => 'tools/login', 'AUTHSCHEME' => 'none', 'LAYOUT' => 'login'],
         'GET /logout' => ['PAGE' => 'tools/logout', 'AUTHSCHEME' => 'none'],
 
         // special
