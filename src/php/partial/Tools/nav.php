@@ -5,14 +5,7 @@
     <?php ss_include('src/php/partial/nav/' . PAGE . '.php', $viewdata); ?>
 
     <div class="navset">
-        <div class="inline-rel">
-            <div class="inline-modal">
-                <form id="tokenform" action="/change-token" method="post" class="only-super1200">
-                    <input type="text" name="token" value="<?= AUTH_TOKEN ?>" style="width: 100%; padding: 0.5em">
-                </form>
-            </div>
-            <a href="#" class="inline-modal-trigger"><i class="icon icon--gray icon--ticket"></i></a>
-        </div>
+        <?php ss_require('src/php/partial/Tools/token-box.php'); ?>
         <a href="#" class="trigger-logout <?php if (!AUTH_TOKEN): ?>disabled<?php endif ?>"><i class="icon icon--gray icon--leave" title="Logout"></i></a>
     </div>
 </div>

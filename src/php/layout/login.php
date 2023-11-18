@@ -6,19 +6,35 @@
     <meta charset="utf-8"/>
     <title>Log In</title>
 </head>
-<body class="wsidebar">
-    <?php ss_require('src/php/partial/Tools/nav.php', $viewdata); ?>
-    <div class="wrapper">
-        <?php if (BACK): ?><br><div class="only-super1200"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php endif ?>
-        <?php ss_include('src/php/partial/preflash/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata); ?>
-        <div class="flash"><?php foreach (is_array(@$flash) ? $flash : [] as $message): ?>
-            <div class="flash__message <?= @$message->type ? "flash__message--{$message->type}" : null ?>"><?= $message->message ?></div>
-        <?php endforeach ?></div>
-        <?php ss_require('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata); ?>
+<body>
+    <div style="text-align: center; padding: 3em;">
+        <div class="login-page">
+            <h1 style="margin-bottom: 1em;">Tools</h1>
+            <form id="loginform">
+                <div class="cred-line">
+                    <p>Username</p>
+                    <input type="text" name="username" id="auth" autocomplete="off" value="<?= @$username ?>">
+                </div>
+                <div class="cred-line">
+                    <p>Password</p>
+                    <input type="password" name="password" id="password">
+                </div>
+                <div class="cred-line">
+                    <input type="submit" value="Sign In">
+                </div>
+            </form>
+        </div>
+
+        <script>document.getElementById('<?= @$username ? 'password' : 'auth' ?>').focus();</script>
+
+        <div style="margin-top: 6em">
+            <div class="navset">
+                <?php ss_require('src/php/partial/Tools/token-box.php'); ?>
+            </div>
+        </div>
     </div>
 
     <?php \ContextVariableSets\ContextVariableSet::form(); ?>
     <script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script>
-    <?php ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata); ?>
 </body>
 </html>

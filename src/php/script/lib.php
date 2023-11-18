@@ -1,6 +1,7 @@
 <?php
 
 use jars\client\HttpClient;
+use jars\contract\BadTokenException;
 use subsimple\Config;
 
 const REF_SATURATION = 0.4;
@@ -186,9 +187,11 @@ function postroute_tools()
             doover();
         }
 
-        $jars->token(AUTH_TOKEN);
-
-        if (!$jars->touch()) {
+        try {
+            $jars
+                ->token(AUTH_TOKEN)
+                ->touch();
+        } catch (BadTokenException $e) {
             doover();
         }
     }

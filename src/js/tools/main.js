@@ -61,12 +61,10 @@
                 if (typeof data == 'string') {
                     setCookie('token', data);
                     window.location.reload();
-                } else {
-                    alert(data.error || 'Unknown error');
                 }
             },
-            error: function(data){
-                alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
+            error: function(data) {
+                alert(data.responseJSON && data.responseJSON.message || 'Unknown error');
             }
         });
     });

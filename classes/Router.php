@@ -5,11 +5,7 @@ namespace Tools;
 class Router extends \subsimple\Router
 {
     protected static $routes = [
-        // login / logout
         'GET /' => ['PAGE' => 'tools/login', 'AUTHSCHEME' => 'none', 'LAYOUT' => 'login'],
-        'GET /logout' => ['PAGE' => 'tools/logout', 'AUTHSCHEME' => 'none'],
-
-        // special
-        'POST /switch-user' => ['PAGE' => 'tools/switch-user', 'AUTHSCHEME' => 'cookie'],
+        'POST /ajax/auth/(?:login|logout)' => ['FORWARD' => \jars\http\HttpRouter::class, 'EAT' => '/ajax'],
    ];
 }
