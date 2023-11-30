@@ -30,11 +30,18 @@ class GroupNavigator extends \ContextVariableSets\ContextVariableSet
 
         $path = [];
 
+        $auto_advance_levels = $default_data['auto_advance'] ?? INF;
+
         while (null !== $piece = array_shift($_path)) {
             $prefix = ($prefix = implode('/', $path)) ? $prefix . '/' : '';
             $groups = $jars->groups($report, $prefix);
 
-            if (!$_path && count($groups) == 1 && ($_piece = reset($groups))) {
+            if (
+                !$_path
+                && count($groups) == 1
+                && ($_piece = reset($groups))
+                && count($path) < $auto_advance_levels
+            ) {
                 $_path = [$_piece, ''];
 
                 continue;
