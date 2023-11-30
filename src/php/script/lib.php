@@ -2,6 +2,7 @@
 
 use jars\client\HttpClient;
 use jars\contract\BadTokenException;
+use jars\Jars;
 use subsimple\Config;
 
 const REF_SATURATION = 0.4;
@@ -151,7 +152,9 @@ function postroute_tools()
 {
     global $jars;
 
-    $jars = HttpClient::of(APIURL);
+    $jars = defined('PORTAL_HOME') && defined('DB_HOME')
+        ? new Jars(PORTAL_HOME, DB_HOME)
+        : HttpClient::of(APIURL);
 
     if (!defined('AUTH_TOKEN')) {
         switch (AUTHSCHEME) {
