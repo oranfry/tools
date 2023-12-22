@@ -1,8 +1,7 @@
 <?php
 
-use jars\client\HttpClient;
 use jars\contract\BadTokenException;
-use jars\Jars;
+use jars\contract\JarsConnector;
 use subsimple\Config;
 
 const REF_SATURATION = 0.4;
@@ -152,30 +151,25 @@ function postroute_tools()
 {
     global $jars;
 
-    $jars = defined('PORTAL_HOME') && defined('DB_HOME')
-        ? new Jars(PORTAL_HOME, DB_HOME)
-        : HttpClient::of(APIURL);
+    $jars = JarsConnector::connect(CONNECTION_STRING);
 
     if (!defined('AUTH_TOKEN')) {
         switch (AUTHSCHEME) {
             case 'header':
                 define('AUTH_TOKEN', @getallheaders()['X-Auth']);
-
                 break;
+
             case 'cookie':
                 define('AUTH_TOKEN', @$_COOKIE['token']);
-
                 break;
+
             case 'pre':
                 break;
+
             case 'none':
                 define('AUTH_TOKEN', null);
-
                 break;
-            case 'onetime':
-                define('AUTH_TOKEN', HttpClient::of(APIURL)->login(USERNAME, PASSWORD));
 
-                break;
             case 'deny':
                 error_response('Access Denied', 403);
 
@@ -185,7 +179,7 @@ function postroute_tools()
         }
     }
 
-    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre', 'onetime'])) {
+    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])) {
         if (!AUTH_TOKEN) {
             doover();
         }

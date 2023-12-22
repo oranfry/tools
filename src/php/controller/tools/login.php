@@ -1,8 +1,7 @@
 <?php
 
-use jars\client\HttpClient;
 use jars\contract\BadTokenException;
-use jars\Jars;
+use jars\contract\JarsConnector;
 use subsimple\Config;
 
 $message = null;
@@ -13,9 +12,7 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
 }
 
 if ($token = @$_COOKIE['token']) {
-    $jars = defined('PORTAL_HOME') && defined('DB_HOME')
-        ? new Jars(PORTAL_HOME, DB_HOME)
-        : HttpClient::of(APIURL);
+    $jars = JarsConnector::connect(CONNECTION_STRING);
 
     try {
         $jars
