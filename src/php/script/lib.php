@@ -151,6 +151,15 @@ function postroute_tools()
 {
     global $jars;
 
+    if (!defined('AUTHSCHEME')) {
+        define('AUTHSCHEME', 'cookie');
+    }
+
+    if (!in_array(AUTHSCHEME, ['cookie', 'header', 'pre', 'none', 'deny'])) {
+        error_log('AUTHSCHEME should be set to "cookie", "header", "pre", "none", or "deny"');
+        die();
+    }
+
     $jars = JarsConnector::connect(CONNECTION_STRING);
 
     if (!defined('AUTH_TOKEN')) {
