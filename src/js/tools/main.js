@@ -432,4 +432,8 @@
         $(window).on('resize', onResize);
         onResize();
     }
+
+    setTimeout(function (){
+        $('#tokenform [name="token"]').attr('type', 'text');
+    }, 1000);
 })();
