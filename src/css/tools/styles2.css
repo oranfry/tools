@@ -37,3 +37,7 @@ tr.deleted:hover td {
     display: inline-block;
     padding: 1em;
 }
+
+.inline-modal-trigger {
+    cursor: pointer;
+}
