@@ -17,7 +17,7 @@
                 </div>
                 <div class="cred-line">
                     <p>Password</p>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" autocomplete="current-password">
                 </div>
                 <div class="cred-line">
                     <input type="submit" value="Sign In">
