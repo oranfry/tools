@@ -8,6 +8,7 @@ class SubsimpleConnector
 {
     protected object $config;
     protected array $mounted = [];
+    protected ?string $fallback = null;
 
     public function __construct(object $config)
     {
@@ -31,8 +32,19 @@ class SubsimpleConnector
         }
     }
 
+    public function fallback(string $router): self
+    {
+        $this->fallback = $router;
+
+        return $this;
+    }
+
     public function get(): object
     {
+        if ($this->fallback) {
+            Router::add("HTTP /.*", ['FORWARD' => $this->fallback]);
+        }
+
         return $this->config;
     }
 
@@ -46,6 +58,8 @@ class SubsimpleConnector
         }
 
         $plugin_config = require APP_HOME . '/' . $path . '/tools-config.php';
+
+        $options = $options + $plugin_config->defaults;
 
         if (!$landingpage = $plugin_config->landingpage ?? null) {
             throw (new Exception("App [$path] missing landing page"))

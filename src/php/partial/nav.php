@@ -7,3 +7,5 @@ foreach (Config::get()->mounted ?? null as $plugin) {
         @include APP_HOME . '/' . $plugin->path . '/src/php/partial/nav/tools-plugin.php';
     })($plugin);
 }
+
+ss_include('src/php/partial/nav/tools-extra.php');
