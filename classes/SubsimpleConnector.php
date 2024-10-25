@@ -59,7 +59,7 @@ class SubsimpleConnector
 
         $plugin_config = require APP_HOME . '/' . $path . '/tools-config.php';
 
-        $options = $options + $plugin_config->defaults;
+        $options = $options + ($plugin_config->defaults ?? []);
 
         if (!$landingpage = $plugin_config->landingpage ?? null) {
             throw (new Exception("App [$path] missing landing page"))
