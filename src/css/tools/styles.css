@@ -207,10 +207,6 @@ input[type="checkbox"] {
     cursor: default;
 }
 
-select {
-    padding-bottom: 1px;
-}
-
 .edit-form p {
     margin: 0 0 0.5em;
 }

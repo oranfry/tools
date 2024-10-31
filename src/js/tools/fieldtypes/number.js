@@ -23,9 +23,17 @@
             return $wrapper;
         },
         set: function ($field, value) {
+            if (!$field.is('select, input')) {
+                $field = $field.find('select, input').first();
+            }
+
             $field.val(value);
         },
         get: function ($field) {
+            if (!$field.is('select, input')) {
+                $field = $field.find('select, input').first();
+            }
+
             return $field.val();
         }
     };

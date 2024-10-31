@@ -57,20 +57,22 @@
             return $field;
         },
         set: function ($field, value) {
-            let $_field = $field.is('select, input') ? $field : $field.find('select, input').first();
-
-            if ($_field.is('select') && !$_field.find('option[value="' + value + '"]').length) {
-                $_field.prepend($('<option>').html(value).prop('value', value));
+            if (!$field.is('select, input')) {
+                $field = $field.find('select, input').first();
             }
 
-            $_field.val(value);
+            if ($field.is('select') && !$field.find('option[value="' + value + '"]').length) {
+                $field.prepend($('<option>').html(value).prop('value', value));
+            }
+
+            $field.val(value);
         },
         get: function ($field) {
-            let $_field = $field.is('select, input') ? $field : $field.find('select, input').first();
+            if (!$field.is('select, input')) {
+                $field = $field.find('select, input').first();
+            }
 
-            console.log($_field.attr('name'), $_field.val());
-
-            return $_field.val();
+            return $field.val();
         }
     };
 })();
