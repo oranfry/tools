@@ -1,0 +1,7 @@
+[
+    "src/js/tools/fieldtypes/fieldtypes.js",
+    "src/js/tools/fieldtypes/bool.js",
+    "src/js/tools/fieldtypes/date.js",
+    "src/js/tools/fieldtypes/number.js",
+    "src/js/tools/fieldtypes/string.js"
+]

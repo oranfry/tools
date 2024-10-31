@@ -1,4 +1,6 @@
 [
     "src/js/tools/main.js",
+    "src/js/tools/graphs.js",
+    "include:src/js/tools/fieldtypes.json",
     "src/js/context-variable-sets/main.js"
 ]

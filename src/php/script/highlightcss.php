@@ -19,3 +19,8 @@ tr.today td,
 .button.button--main {
     border: 1px solid #<?= adjustBrightness($highlight, -60) ?>
 }
+
+.button.button--main.disabled {
+    background-color: #<?= adjustBrightness($highlight, 60) ?>;
+    border: 1px solid #<?= $highlight ?>;
+}

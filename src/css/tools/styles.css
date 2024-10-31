@@ -77,6 +77,10 @@ body.wsidebar .wrapper {
     box-sizing: border-box;
 }
 
+.line h3 {
+    margin-bottom: 1em;
+}
+
 .applink {
     padding: 0;
     text-decoration: none;
@@ -155,22 +159,34 @@ input, select, button, textarea, .textbox, .button {
     -moz-appearance: none;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    padding: 0 0.3em;
     background-color: white;
-    border-radius: 0;
+    border-radius: 3px;
     color: #333;
     font-size: 1em;
-    line-height: 1.2em;
     text-decoration: none;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+input, select, button, textarea, .textbox, .button, .form-row__label {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    line-height: 1.5em;
+}
+
+.form-row__label {
+    border: 1px solid transparent;
 }
 
 input[type="checkbox"] {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    box-sizing: content-box;
+    padding: 0;
+    width: 1.3em;
+    height: 1.3em;
     background-size: contain;
     filter: grayscale(100%);
-    margin: 0;
+    margin: 0.3em;
 }
 
 .easy-table input[type="checkbox"] {
@@ -181,9 +197,14 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-.button--main {
+.button.button--main {
     border-style: solid;
     border-width: 1px;
+}
+
+.button.disabled {
+    color: #777;
+    cursor: default;
 }
 
 select {
@@ -614,15 +635,15 @@ textarea {
     margin-top: 0.3em;
 }
 
-.form-row__label {
+.form-row .form-row__label {
     float: left;
     width: 25%;
-    padding-right: 1em;
     box-sizing: border-box;
     text-align: right;
+    line-height: 1.5em;
 }
 
-.form-row__value {
+.form-row .form-row__value {
     position: relative;
     float: left;
     width: 75%;
@@ -635,9 +656,14 @@ textarea {
     width: 50%;
 }
 
+.line.bulk .form-row .form-row__value {
+    padding-left: 4em;
+}
+
 .form-row__value > input[type="checkbox"].includeme:first-child {
     position: absolute;
-    left: 0;
+    left: 1em;
+    cursor: pointer;
 }
 
 .form-row__value input[type="text"], .form-row__value .textbox {
@@ -764,6 +790,13 @@ input[type="number"]::-webkit-inner-spin-button {
 .easy-table tr.selected td {
     background-color: #3573bf;
     color: white;
+}
+
+
+.easy-table tr, .easy-table td {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .easy-table tr.linerow.selected:hover td {
@@ -1064,6 +1097,10 @@ input[type="number"]::-webkit-inner-spin-button {
     table, .wrapper {
         margin: 0 auto;
     }
+
+    .line {
+        min-height: 100vh;
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -1142,5 +1179,9 @@ input[type="number"]::-webkit-inner-spin-button {
         border: 1px solid #ccc;
         background: white;
         border-radius: 5px;
+    }
+
+    .line {
+        border-radius: 0.5em;
     }
 }
