@@ -4,7 +4,8 @@
             let $field;
 
             if (typeof spec.options !== 'undefined') {
-                $field = $('<select style="width: 80%">')
+
+                $field = $('<select>')
                     .attr('name', spec.name);
 
                 if (spec.readonly) {
@@ -24,7 +25,25 @@
                 });
 
                 if (!spec.constrained) {
-                    $field.append($('<button type="button" class="adhoc-toggle">&hellip;</button>'));
+                    let $adhoc = $('<span class="button adhoc-toggle noedit-invisible">&hellip;</span>')
+                        .on('click', function(e) {
+                            e.preventDefault();
+
+                            let adhocvalue = prompt("New value");
+
+                            if (adhocvalue) {
+                                let $option = $('<option>' + adhocvalue + '</option>');
+
+                                $option.insertBefore($field.children().first());
+                                $field.val(adhocvalue);
+                                $field.change();
+                            }
+                        });
+                    let $wrapper = $('<span style="white-space: nowrap">');
+
+                    $wrapper.append($field, $adhoc);
+
+                    return $wrapper;
                 }
             } else {
                 $field = $('<input class="field value" type="text" autocomplete="off">')
@@ -38,14 +57,20 @@
             return $field;
         },
         set: function ($field, value) {
-            if ($field.is('select') && !$field.find('option[value="' + value + '"]').length) {
-                $field.prepend($('<option>').html(value).prop('value', value));
+            let $_field = $field.is('select, input') ? $field : $field.find('select, input').first();
+
+            if ($_field.is('select') && !$_field.find('option[value="' + value + '"]').length) {
+                $_field.prepend($('<option>').html(value).prop('value', value));
             }
 
-            $field.val(value);
+            $_field.val(value);
         },
         get: function ($field) {
-            return $field.val();
+            let $_field = $field.is('select, input') ? $field : $field.find('select, input').first();
+
+            console.log($_field.attr('name'), $_field.val());
+
+            return $_field.val();
         }
     };
 })();

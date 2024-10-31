@@ -13,7 +13,7 @@
                 $field.prop('disabled', true);
             }
 
-            let $negate = $('<span class="button negate">±</span>').on('click', function (e) {
+            let $negate = $('<span class="button noedit-invisible">±</span>').on('click', function (e) {
                 e.preventDefault();
                 $field.val(0 - $field.val());
             });

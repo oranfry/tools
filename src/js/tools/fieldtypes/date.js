@@ -10,7 +10,7 @@
                 $field.prop('disabled', true);
             }
 
-            let $fromToday = $('<span class="button fromtoday">&bull;</span>').on('click', function (e) {
+            let $fromToday = $('<span class="button noedit-invisible">&bull;</span>').on('click', function (e) {
                 e.preventDefault();
                 let today = new Date();
 

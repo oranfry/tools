@@ -685,7 +685,7 @@ textarea {
     appearance:textfield !important;
 }
 
-.noedit .fromtoday, .noedit .adhoc-toggle {
+.noedit .noedit-invisible {
     display: none;
 }
 
@@ -1099,7 +1099,8 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     .line {
-        min-height: 100vh;
+        height: 100vh;
+        overflow-y: scroll;
     }
 }
 
