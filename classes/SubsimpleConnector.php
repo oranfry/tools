@@ -43,6 +43,7 @@ class SubsimpleConnector
     {
         if ($this->fallback) {
             Router::add("HTTP /.*", ['FORWARD' => $this->fallback]);
+            Router::add("CLI *", ['FORWARD' => $this->fallback]);
         }
 
         return $this->config;
