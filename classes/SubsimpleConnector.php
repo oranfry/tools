@@ -23,7 +23,11 @@ class SubsimpleConnector
         $this->config->router = Router::class;
         $this->config->requires ??= [];
 
-        $requires = ['oranfry/tools', 'oranfry/jars-http'];
+        $requires = [
+            'oranfry/tools',
+            'oranfry/jars-http',
+            'oranfry/context-variable-sets',
+        ];
 
         foreach ($requires as $plugin) {
             if (!in_array($path = APP_HOME . '/vendor/' . $plugin, $this->config->requires)) {
