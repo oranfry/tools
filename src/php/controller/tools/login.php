@@ -3,12 +3,12 @@
 use jars\contract\BadTokenException;
 use jars\contract\JarsConnector;
 use subsimple\Config;
+use subsimple\Exception;
 
 $message = null;
 
 if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
-    error_log('Unexpectedly, token is already present');
-    die();
+    throw new Exception('Unexpectedly, token is already present');
 }
 
 if ($token = @$_COOKIE['token']) {
@@ -20,7 +20,7 @@ if ($token = @$_COOKIE['token']) {
             ->touch();
 
         if (!$landingpage = @Config::get()->landingpage) {
-            error_response('No landing page defined');
+            throw new Exception('No landing page defined');
         }
 
         header('Location: ' . $landingpage);
