@@ -66,13 +66,10 @@ class SubsimpleConnector
 
         $options = $options + ($plugin_config->defaults ?? []);
 
-        if (!$landingpage = $plugin_config->landingpage ?? null) {
-            throw (new Exception("App [$path] missing landing page"))
-                ->publicMessage($complaint);
-        }
+        $landingpage = $plugin_config->landingpage ?? '';
 
         if (!$this->mounted || $default) {
-            $this->config->landingpage = $point . $plugin_config->landingpage;
+            $this->config->landingpage = $point . $landingpage;
         }
 
         foreach (array_merge([$path], $plugin_config->requires ?? []) as $req) {
