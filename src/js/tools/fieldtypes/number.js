@@ -40,4 +40,7 @@
 
     window.fieldtypes.types.number = spec;
     window.fieldtypes.types.float = spec;
+    window.fieldtypes.types.int = spec;
+
+    window.fieldtypes.types.int.dp = 0;
 })();
