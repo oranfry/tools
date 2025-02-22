@@ -70,17 +70,6 @@ body.wsidebar .wrapper {
     padding-left: 280px;
 }
 
-.line {
-    display: inline-block;
-    background-color: #eeeeee;
-    padding: 1em;
-    box-sizing: border-box;
-}
-
-.line h3 {
-    margin-bottom: 1em;
-}
-
 .applink {
     padding: 0;
     text-decoration: none;
@@ -652,10 +641,6 @@ textarea {
     width: 50%;
 }
 
-.line.bulk .form-row .form-row__value {
-    padding-left: 4em;
-}
-
 .form-row__value > input[type="checkbox"].includeme:first-child {
     position: absolute;
     left: 1em;
@@ -1062,11 +1047,6 @@ input[type="number"]::-webkit-inner-spin-button {
     table, .wrapper {
         margin: 0 auto;
     }
-
-    .line {
-        height: 100svh;
-        overflow-y: scroll;
-    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -1145,9 +1125,5 @@ input[type="number"]::-webkit-inner-spin-button {
         border: 1px solid #ccc;
         background: white;
         border-radius: 5px;
-    }
-
-    .line {
-        border-radius: 0.5em;
     }
 }
