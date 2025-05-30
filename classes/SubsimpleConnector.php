@@ -81,13 +81,18 @@ class SubsimpleConnector
         }
 
         if ($router = $plugin_config->router ?? null) {
-            Router::add("HTTP $point.*", [
+            $route = [
                 'FORWARD' => $router,
-                'EAT' => $point,
                 'TOOLS_PLUGIN' => $path,
                 'TOOLS_PLUGIN_MOUNT_POINT' => $point,
                 'TOOLS_PLUGIN_OPTIONS' => $options,
-            ]);
+            ];
+
+            if ($point !== '/') {
+                $route['EAT'] = $point;
+            }
+
+            Router::add("HTTP $point.*", $route);
         }
 
         if (is_callable($callable = $plugin_config->custom ?? null)) {
