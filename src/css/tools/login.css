@@ -27,8 +27,8 @@ p {
     margin: 0;
 }
 
-.login-page input[type="text"],.login-page input[type="password"] {
-    color: #333;
+.login-page input[type="text"],
+.login-page input[type="password"] {
     padding: 0.4em;
 }
 
@@ -60,5 +60,31 @@ p {
 @media (max-width: 959px) {
     .desktop-only {
         display: none;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .login-page input[type="submit"] {
+        background-color: #ddd;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .login-page input[type="text"],
+    .login-page input[type="password"] {
+        color: #333;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .login-page input[type="submit"] {
+        background-color: #333;
+        color: #cdcdcd;
+        border: 1px solid #555;
+    }
+
+    .login-page input[type="text"],
+    .login-page input[type="password"] {
+        color: #cdcdcd;
     }
 }

@@ -10,6 +10,7 @@ tr.today td,
 .cv-manip.current,
 .navbar .listable a.current {
     background-color: #<?= $highlight ?>;
+    color: #333;
 }
 
 .navbar .listable a.current {
