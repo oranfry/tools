@@ -201,6 +201,11 @@ function postroute_tools()
             doover();
         }
     }
+
+    if (defined('TOOLS_PLUGIN_CONFIG')) {
+        TOOLS_PLUGIN_CONFIG->boot();
+    }
+
 }
 
 function rgb2hex($rgb)

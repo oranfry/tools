@@ -53,7 +53,7 @@ class SubsimpleConnector
         return $this->config;
     }
 
-    public function mount(string $point, string $path, bool $default = false, array $options = []): self
+    public function mount(string $point, string $configClass, bool $default = false, array $options = []): self
     {
         $complaint = 'Internal error, please contact the site administrator';
 
@@ -62,31 +62,38 @@ class SubsimpleConnector
                 ->publicMessage($complaint);
         }
 
-        $plugin_config = require APP_HOME . '/' . $path . '/tools-config.php';
+        $pluginConfig = new $configClass();
 
-        $options = $options + ($plugin_config->defaults ?? []);
-
-        $landingpage = $plugin_config->landingpage ?? '';
+        $options = $options + $pluginConfig->defaults();
 
         if (!$this->mounted || $default) {
-            $this->config->landingpage = $point . $landingpage;
+            $this->config->landingpage = $point . $pluginConfig->landingpage();
         }
 
-        foreach (array_merge([$path], $plugin_config->requires ?? []) as $req) {
-            $full = APP_HOME . '/' . $req;
+        $title = $options['title'] ?? $pluginConfig->title();
+        $includePath = $pluginConfig->includePath();
 
-            if (!in_array($full, $this->config->requires)) {
-                $this->config->requires[] = $full;
+        $includePaths = array_merge($includePath !== null ? [$includePath] : [], $pluginConfig->requires());
+        $reqs = array_map(fn ($path) => Helper::resolve(APP_HOME . '/' . $path), $includePaths);
+
+        foreach ($reqs as $req) {
+            if (
+                $req !== APP_HOME
+                && !in_array($req, $this->config->requires, true)
+            ) {
+                $this->config->requires[] = $req;
             }
         }
 
-        if ($router = $plugin_config->router ?? null) {
-            $route = [
+        if ($router = $pluginConfig->router()) {
+            $route = array_filter([
                 'FORWARD' => $router,
-                'TOOLS_PLUGIN' => $path,
+                'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
+                'TOOLS_PLUGIN_INCLUDE_PATH' => $includePath !== null ? Helper::resolve(APP_HOME . '/' . $includePath) : null,
                 'TOOLS_PLUGIN_MOUNT_POINT' => $point,
                 'TOOLS_PLUGIN_OPTIONS' => $options,
-            ];
+                'TOOLS_PLUGIN_TITLE' => $title,
+            ], fn ($item) => null !== $item);
 
             if ($point !== '/') {
                 $route['EAT'] = $point;
@@ -95,11 +102,9 @@ class SubsimpleConnector
             Router::add("HTTP $point.*", $route);
         }
 
-        if (is_callable($callable = $plugin_config->custom ?? null)) {
-            $callable($this->config, $point, $path, $options);
-        }
+        $pluginConfig->custom($this->config, $point, $options);
 
-        $this->mounted[] = (object) compact('point', 'path', 'options');
+        $this->mounted[] = (object) compact('point', 'configClass', 'includePath', 'options', 'title');
 
         return $this;
     }

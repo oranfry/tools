@@ -25,3 +25,9 @@ tr.today td,
     background-color: #<?= adjustBrightness($highlight, 60) ?>;
     border: 1px solid #<?= $highlight ?>;
 }
+
+@media screen and (min-width: 1200px) {
+    .switcher-trigger {
+        background-color: #<?= $highlight ?>;
+    }
+}
