@@ -8,6 +8,8 @@ class SubsimpleConnector
 {
     protected object $config;
     protected array $mounted = [];
+    protected array $httpMounted = [];
+    protected array $cliMounted = [];
     protected ?string $fallback = null;
 
     public function __construct(object $config)
@@ -53,28 +55,23 @@ class SubsimpleConnector
         return $this->config;
     }
 
-    public function mount(string $point, string $configClass, bool $default = false, array $options = []): self
+    public function mount(?string $httpMountPoint, ?string $cliMountPoint, string $configClass, bool $default = false, array $options = []): self
     {
         $complaint = 'Internal error, please contact the site administrator';
 
-        if (!preg_match('@^/@', $point)) {
-            throw (new Exception('Invalid mount point'))
-                ->publicMessage($complaint);
+        if ($httpMountPoint === null && $cliMountPoint === null) {
+                throw (new Exception('Please set at least one of httpMountPoint and cliMountPoint'))
+                    ->publicMessage($complaint);
         }
 
         $pluginConfig = new $configClass();
-
         $options = $options + $pluginConfig->defaults();
-
-        if (!$this->mounted || $default) {
-            $this->config->landingpage = $point . $pluginConfig->landingpage();
-        }
-
         $title = $options['title'] ?? $pluginConfig->title();
         $includePath = $pluginConfig->includePath();
-
         $includePaths = array_merge($includePath !== null ? [$includePath] : [], $pluginConfig->requires());
         $reqs = array_map(fn ($path) => Helper::resolve(APP_HOME . '/' . $path), $includePaths);
+
+        $pluginConfig->custom($this->config, $httpMountPoint, $cliMountPoint, $options);
 
         foreach ($reqs as $req) {
             if (
@@ -85,26 +82,64 @@ class SubsimpleConnector
             }
         }
 
-        if ($router = $pluginConfig->router()) {
-            $route = array_filter([
-                'FORWARD' => $router,
-                'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
-                'TOOLS_PLUGIN_INCLUDE_PATH' => $includePath !== null ? Helper::resolve(APP_HOME . '/' . $includePath) : null,
-                'TOOLS_PLUGIN_MOUNT_POINT' => $point,
-                'TOOLS_PLUGIN_OPTIONS' => $options,
-                'TOOLS_PLUGIN_TITLE' => $title,
-            ], fn ($item) => null !== $item);
+        $pluginSummary = (object) compact('httpMountPoint', 'cliMountPoint', 'configClass', 'includePath', 'options', 'title');
 
-            if ($point !== '/') {
-                $route['EAT'] = $point;
+        if ($httpMountPoint !== null) {
+            if (!preg_match('@^/@', $httpMountPoint)) {
+                throw (new Exception('Invalid httpMountPoint'))
+                    ->publicMessage($complaint);
             }
 
-            Router::add("HTTP $point.*", $route);
+            if (!$this->httpMounted || $default) {
+                $this->config->landingpage = $httpMountPoint . $pluginConfig->landingpage();
+            }
+
+            if ($router = $pluginConfig->router()) {
+                $route = array_filter([
+                    'FORWARD' => $router,
+                    'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
+                    'TOOLS_PLUGIN_INCLUDE_PATH' => $includePath !== null ? Helper::resolve(APP_HOME . '/' . $includePath) : null,
+                    'TOOLS_PLUGIN_MOUNT_POINT' => $httpMountPoint,
+                    'TOOLS_PLUGIN_OPTIONS' => $options,
+                    'TOOLS_PLUGIN_TITLE' => $title,
+                ], fn ($item) => null !== $item);
+
+                if ($httpMountPoint !== '/') {
+                    $route['EAT'] = $httpMountPoint;
+                }
+
+                Router::add("HTTP $httpMountPoint.*", $route);
+            }
+
+            $this->httpMounted[] = $pluginSummary;
         }
 
-        $pluginConfig->custom($this->config, $point, $options);
+        if ($cliMountPoint !== null) {
+            if (!preg_match('/^[a-z0-9_-]+$/', $cliMountPoint)) {
+                throw (new Exception('Invalid cliMountPoint'))
+                    ->publicMessage($complaint);
+            }
 
-        $this->mounted[] = (object) compact('point', 'configClass', 'includePath', 'options', 'title');
+            if ($router = $pluginConfig->router()) {
+                $route = array_filter([
+                    'FORWARD' => $router,
+                    'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
+                    'TOOLS_PLUGIN_INCLUDE_PATH' => $includePath !== null ? Helper::resolve(APP_HOME . '/' . $includePath) : null,
+                    'TOOLS_PLUGIN_MOUNT_POINT' => $httpMountPoint,
+                    'TOOLS_PLUGIN_OPTIONS' => $options,
+                    'TOOLS_PLUGIN_TITLE' => $title,
+                    'TOOLS_PLUGIN_CLI_MOUNT_POINT',
+                ], fn ($item) => null !== $item);
+
+                $route['EAT'] = $cliMountPoint;
+
+                Router::add("CLI $cliMountPoint *", $route);
+            }
+
+            $this->cliMounted[] = $pluginSummary;
+        }
+
+        $this->mounted[] = $pluginSummary;
 
         return $this;
     }

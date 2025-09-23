@@ -18,7 +18,7 @@ use subsimple\Config;
         if (count($mounted = Config::get()->mounted ?? []) > 1) {
             foreach ($mounted as $plugin) {
                 ?><a<?php
-                    ?> href="<?= $plugin->point ?>"<?php
+                    ?> href="<?= $plugin->httpMountPoint ?>"<?php
                     ?>><?php
                     echo $plugin->title;
                 ?></a><?php

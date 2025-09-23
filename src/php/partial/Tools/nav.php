@@ -3,7 +3,7 @@
 use \subsimple\Config;
 use obex\Obex;
 
-$plugin = Obex::find(Config::get()->mounted, 'point', 'is', TOOLS_PLUGIN_MOUNT_POINT);
+$plugin = Obex::find(Config::get()->mounted, 'httpMountPoint', 'is', TOOLS_PLUGIN_MOUNT_POINT);
 
 ?><div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div><?php
 ?><div class="navbar printhide"><?php

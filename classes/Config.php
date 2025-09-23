@@ -13,7 +13,7 @@ abstract class Config
         return [];
     }
 
-    public function custom(object $config, string $point, array $options): void
+    public function custom(object $config, ?string $httpMountPoint, ?string $cliMountPoint, array $options): void
     {
     }
 
