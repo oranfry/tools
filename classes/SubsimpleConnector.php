@@ -84,17 +84,17 @@ class SubsimpleConnector
 
         $pluginSummary = (object) compact('httpMountPoint', 'cliMountPoint', 'configClass', 'includePath', 'options', 'title');
 
-        if ($httpMountPoint !== null) {
-            if (!preg_match('@^/@', $httpMountPoint)) {
-                throw (new Exception('Invalid httpMountPoint'))
-                    ->publicMessage($complaint);
-            }
+        if ($router = $pluginConfig->router()) {
+            if ($httpMountPoint !== null) {
+                if (!preg_match('@^/@', $httpMountPoint)) {
+                    throw (new Exception('Invalid httpMountPoint'))
+                        ->publicMessage($complaint);
+                }
 
-            if (!$this->httpMounted || $default) {
-                $this->config->landingpage = $httpMountPoint . $pluginConfig->landingpage();
-            }
+                if (!$this->httpMounted || $default) {
+                    $this->config->landingpage = $httpMountPoint . $pluginConfig->landingpage();
+                }
 
-            if ($router = $pluginConfig->router()) {
                 $route = array_filter([
                     'FORWARD' => $router,
                     'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
@@ -109,18 +109,16 @@ class SubsimpleConnector
                 }
 
                 Router::add("HTTP $httpMountPoint.*", $route);
+
+                $this->httpMounted[] = $pluginSummary;
             }
 
-            $this->httpMounted[] = $pluginSummary;
-        }
+            if ($cliMountPoint !== null) {
+                if (!preg_match('/^\w*$/', $cliMountPoint)) {
+                    throw (new Exception('Invalid cliMountPoint'))
+                        ->publicMessage($complaint);
+                }
 
-        if ($cliMountPoint !== null) {
-            if (!preg_match('/^[a-z0-9_-]+$/', $cliMountPoint)) {
-                throw (new Exception('Invalid cliMountPoint'))
-                    ->publicMessage($complaint);
-            }
-
-            if ($router = $pluginConfig->router()) {
                 $route = array_filter([
                     'FORWARD' => $router,
                     'TOOLS_PLUGIN_CONFIG' => $pluginConfig,
@@ -131,12 +129,20 @@ class SubsimpleConnector
                     'TOOLS_PLUGIN_CLI_MOUNT_POINT',
                 ], fn ($item) => null !== $item);
 
-                $route['EAT'] = $cliMountPoint;
+                if ($cliMountPoint) {
+                    $route['EAT'] = $cliMountPoint;
+                }
 
-                Router::add("CLI $cliMountPoint *", $route);
+                $pattern = implode(' ', array_filter([
+                    'CLI',
+                    $cliMountPoint,
+                    '*',
+                ]));
+
+                Router::add($pattern, $route);
+
+                $this->cliMounted[] = $pluginSummary;
             }
-
-            $this->cliMounted[] = $pluginSummary;
         }
 
         $this->mounted[] = $pluginSummary;
