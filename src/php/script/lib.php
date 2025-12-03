@@ -3,6 +3,8 @@
 use jars\contract\BadTokenException;
 use jars\contract\JarsConnector;
 use subsimple\Config;
+use subsimple\Exception;
+use subsimple\ForbiddenException;
 
 const REF_SATURATION = 0.4;
 const REF_LIGHTNESS = 0.73;
@@ -155,57 +157,62 @@ function postroute_tools()
         define('AUTHSCHEME', 'cookie');
     }
 
-    if (!in_array(AUTHSCHEME, ['cookie', 'header', 'pre', 'none', 'deny'])) {
-        error_log('AUTHSCHEME should be set to "cookie", "header", "pre", "none", or "deny"');
-        die();
-    }
+    if (!isset($jars)) {
+        $jars = JarsConnector::connect(CONNECTION_STRING);
 
-    $jars = JarsConnector::connect(CONNECTION_STRING);
+        if (!defined('AUTH_TOKEN')) {
+            switch (AUTHSCHEME) {
+                case 'header':
+                    define('AUTH_TOKEN', @getallheaders()['X-Auth']);
+                    break;
 
-    if (!defined('AUTH_TOKEN')) {
-        switch (AUTHSCHEME) {
-            case 'header':
-                define('AUTH_TOKEN', @getallheaders()['X-Auth']);
-                break;
+                case 'cookie':
+                    define('AUTH_TOKEN', @$_COOKIE['token']);
+                    break;
 
-            case 'cookie':
-                define('AUTH_TOKEN', @$_COOKIE['token']);
-                break;
+                case 'pre':
+                    break;
 
-            case 'pre':
-                break;
+                case 'none':
+                    define('AUTH_TOKEN', null);
+                    break;
 
-            case 'none':
-                define('AUTH_TOKEN', null);
-                break;
+                case 'onetime':
+                    $jars->login(
+                        defined('USERNAME') ? USERNAME : null,
+                        defined('PASSWORD') ? PASSWORD : null,
+                        true,
+                    );
 
-            case 'deny':
-                error_response('Access Denied', 403);
+                    break;
 
-            default:
-                error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
-                error_response('Internal Server Error', 500);
+                case 'deny':
+                    throw new ForbiddenException();
+
+                default:
+                    error_log('Invalid AUTHSCHEME: ' . AUTHSCHEME);
+                    throw (new Exception())->publicMessage('Internal Server Error');
+            }
         }
-    }
 
-    if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])) {
-        if (!AUTH_TOKEN) {
-            doover();
-        }
+        if (in_array(AUTHSCHEME, ['header', 'cookie', 'pre'])) {
+            if (!AUTH_TOKEN) {
+                doover();
+            }
 
-        try {
-            $jars
-                ->token(AUTH_TOKEN)
-                ->touch();
-        } catch (BadTokenException $e) {
-            doover();
+            try {
+                $jars
+                    ->token(AUTH_TOKEN)
+                    ->touch();
+            } catch (BadTokenException $e) {
+                doover();
+            }
         }
     }
 
     if (defined('TOOLS_PLUGIN_CONFIG')) {
         TOOLS_PLUGIN_CONFIG->boot();
     }
-
 }
 
 function rgb2hex($rgb)
