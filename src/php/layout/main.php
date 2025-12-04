@@ -17,6 +17,10 @@ use subsimple\Config;
     ?><div id="switcher" class="modal"><?php
         if (count($mounted = Config::get()->mounted ?? []) > 1) {
             foreach ($mounted as $plugin) {
+                if ($plugin->httpMountPoint === null) {
+                    continue;
+                }
+
                 ?><a<?php
                     ?> href="<?= $plugin->httpMountPoint ?>"<?php
                     ?>><?php
