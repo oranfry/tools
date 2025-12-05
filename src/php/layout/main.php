@@ -15,9 +15,9 @@ use subsimple\Config;
 
 ?><body class="wsidebar"><?php
     ?><div id="switcher" class="modal"><?php
-        if (count($mounted = Config::get()->mounted ?? []) > 1) {
+        if (count($mounted = Config::get()->httpMounted ?? []) > 1) {
             foreach ($mounted as $plugin) {
-                if ($plugin->httpMountPoint === null) {
+                if ($plugin->options->hidden ?? false) {
                     continue;
                 }
 
