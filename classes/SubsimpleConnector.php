@@ -22,6 +22,8 @@ class SubsimpleConnector
     protected function boot()
     {
         $this->config->mounted = &$this->mounted;
+        $this->config->httpMounted = &$this->httpMounted;
+        $this->config->cliMounted = &$this->cliMounted;
         $this->config->router = Router::class;
         $this->config->requires ??= [];
 

@@ -15,12 +15,10 @@ use subsimple\Config;
 
 ?><body class="wsidebar"><?php
     ?><div id="switcher" class="modal"><?php
-        if (count($mounted = Config::get()->httpMounted ?? []) > 1) {
-            foreach ($mounted as $plugin) {
-                if ($plugin->options->hidden ?? false) {
-                    continue;
-                }
+        $shownPlugins = array_filter(Config::get()->httpMounted ?? [], fn ($plugin) => !($plugin->options['hidden'] ?? false));
 
+        if (count($shownPlugins) > 1) {
+            foreach ($shownPlugins as $plugin) {
                 ?><a<?php
                     ?> href="<?= $plugin->httpMountPoint ?>"<?php
                     ?>><?php
