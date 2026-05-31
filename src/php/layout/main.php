@@ -56,6 +56,8 @@ use subsimple\Config;
 
     ContextVariableSet::form();
 
+    ss_require('src/php/partial/Tools/variables.php');
+
     ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
 
     ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata);

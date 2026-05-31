@@ -45,7 +45,7 @@
             data: JSON.stringify({username: $(this).find('[name="username"]').val(), password: $(this).find('[name="password"]').val()}),
             success: function(data) {
                 if (typeof data == 'string') {
-                    setCookie('token', data);
+                    setCookie('token', data, TOOLS_TOKEN_EXPIRY_DAYS);
                     window.location.reload();
                 }
             },
@@ -81,7 +81,7 @@
 
     $('#tokenform').on('submit', function(e){
         e.preventDefault();
-        setCookie('token', $(this).find('[name="token"]').val());
+        setCookie('token', $(this).find('[name="token"]').val(), TOOLS_TOKEN_EXPIRY_DAYS);
         window.location.reload();
     });
 
