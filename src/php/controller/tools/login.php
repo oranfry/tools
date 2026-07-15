@@ -2,8 +2,8 @@
 
 use OranFry\Jars\Contract\BadTokenException;
 use OranFry\Jars\Contract\JarsConnector;
-use subsimple\Config;
-use subsimple\Exception;
+use OranFry\Subsimple\Config;
+use OranFry\Subsimple\Exception;
 
 $message = null;
 

@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "Tools\\": "classes"
+            "OranFry\\Tools\\": "classes"
         }
     },
     "name": "oranfry/tools",

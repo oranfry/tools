@@ -1,7 +1,7 @@
 <?php
 
-use \subsimple\Config;
-use obex\Obex;
+use OranFry\Subsimple\Config;
+use OranFry\Obex\Obex;
 
 $plugin = Obex::find(Config::get()->mounted, 'httpMountPoint', 'is', TOOLS_PLUGIN_MOUNT_POINT);
 

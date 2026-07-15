@@ -1,8 +1,8 @@
 <?php
 
-namespace Tools;
+namespace OranFry\Tools;
 
-use subsimple\Exception;
+use OranFry\Subsimple\Exception;
 
 class SubsimpleConnector
 {

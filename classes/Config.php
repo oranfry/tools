@@ -1,6 +1,6 @@
 <?php
 
-namespace Tools;
+namespace OranFry\Tools;
 
 abstract class Config
 {

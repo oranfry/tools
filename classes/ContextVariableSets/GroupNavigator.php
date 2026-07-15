@@ -1,8 +1,8 @@
 <?php
 
-namespace Tools\ContextVariableSets;
+namespace OranFry\Tools\ContextVariableSets;
 
-class GroupNavigator extends \ContextVariableSets\ContextVariableSet
+class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
 {
     public array $value;
     public array $options = [];

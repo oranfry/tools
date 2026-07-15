@@ -1,6 +1,6 @@
 <?php
 
-use ContextVariableSets\ContextVariableSet;
+use OranFry\ContextVariableSets\ContextVariableSet;
 
 ?><!DOCTYPE html><?php
 ?><html lang="en-NZ"><?php

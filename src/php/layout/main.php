@@ -1,7 +1,7 @@
 <?php
 
-use ContextVariableSets\ContextVariableSet;
-use subsimple\Config;
+use OranFry\ContextVariableSets\ContextVariableSet;
+use OranFry\Subsimple\Config;
 
 ?><!DOCTYPE html><?php
 ?><html lang="en-NZ"><?php

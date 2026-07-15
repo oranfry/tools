@@ -1,6 +1,6 @@
 <?php
 
-namespace Tools;
+namespace OranFry\Tools;
 
 class Router extends \subsimple\Router
 {
@@ -12,7 +12,7 @@ class Router extends \subsimple\Router
         ],
 
         'POST /ajax/auth/(?:login|logout)' => [
-            'FORWARD' => \jars\http\HttpRouter::class,
+            'FORWARD' => \OranFry\Jars\HTTP\HttpRouter::class,
             'EAT' => '/ajax',
         ],
     ];

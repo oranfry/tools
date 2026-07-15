@@ -1,8 +1,8 @@
 <?php
 
-namespace Tools\ContextVariableSets;
+namespace OranFry\Tools\ContextVariableSets;
 
-class Showas extends \ContextVariableSets\ContextVariableSet
+class Showas extends \OranFry\ContextVariableSets\ContextVariableSet
 {
     public $value;
     public $options = [];

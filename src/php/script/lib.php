@@ -2,9 +2,9 @@
 
 use OranFry\Jars\Contract\BadTokenException;
 use OranFry\Jars\Contract\JarsConnector;
-use subsimple\Config;
-use subsimple\Exception;
-use subsimple\ForbiddenException;
+use OranFry\Subsimple\Config;
+use OranFry\Subsimple\Exception;
+use OranFry\Subsimple\ForbiddenException;
 
 const REF_SATURATION = 0.4;
 const REF_LIGHTNESS = 0.73;
