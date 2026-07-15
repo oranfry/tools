@@ -33,14 +33,14 @@ use OranFry\ContextVariableSets\ContextVariableSet;
 
         ?><div style="margin-top: 6em"><?php
             ?><div class="navset"><?php
-                ss_require('src/php/partial/Tools/token-box.php');
+                ss_require('src/php/partial/tools/token-box.php');
             ?></div><?php
         ?></div><?php
     ?></div><?php
 
     ContextVariableSet::form();
 
-    ss_require('src/php/partial/Tools/variables.php');
+    ss_require('src/php/partial/tools/variables.php');
 
     ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
 ?></body><?php

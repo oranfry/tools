@@ -29,12 +29,12 @@ use OranFry\Subsimple\Config;
         }
         ?><br><?php
 
-        ss_require('src/php/partial/Tools/token-box.php');
+        ss_require('src/php/partial/tools/token-box.php');
         ?><br><?php
-        ss_require('src/php/partial/Tools/logout-icon.php');
+        ss_require('src/php/partial/tools/logout-icon.php');
     ?></div><?php
 
-    ss_require('src/php/partial/Tools/nav.php', $viewdata);
+    ss_require('src/php/partial/tools/nav.php', $viewdata);
 
     ?><div class="wrapper"><?php
         if (BACK) {
@@ -56,7 +56,7 @@ use OranFry\Subsimple\Config;
 
     ContextVariableSet::form();
 
-    ss_require('src/php/partial/Tools/variables.php');
+    ss_require('src/php/partial/tools/variables.php');
 
     ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
 
