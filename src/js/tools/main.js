@@ -18,12 +18,17 @@
         return "";
     }
 
-    window.setCookie = function(cname, cvalue, exdays) {
-        exdays > 0 && setCookie(cname, '', -1);
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; path=/; " + expires;
+    window.setCookie = function(cname, cvalue, exdays) { 
+        let expires = '';
+
+        if (typeof exdays !== 'undefined' && exdays !== null && exdays > 0) {
+            deleteCookie(cname);
+            var d = new Date();
+            d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+            expires = "; expires=" + d.toUTCString();
+        }
+
+        document.cookie = cname + "=" + cvalue + "; path=/" + expires;
     };
 
     window.deleteCookie = function(cname) {
