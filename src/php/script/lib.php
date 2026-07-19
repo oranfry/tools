@@ -158,7 +158,7 @@ function postroute_tools()
     }
 
     if (!isset($jars)) {
-        $jars = JarsConnector::connect(CONNECTION_STRING);
+        $jars = JarsConnector::connect(JARS_CONNECTION_STRING);
 
         if (!defined('AUTH_TOKEN')) {
             switch (AUTHSCHEME) {

@@ -12,7 +12,7 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
 }
 
 if ($token = @$_COOKIE['token']) {
-    $jars = JarsConnector::connect(CONNECTION_STRING);
+    $jars = JarsConnector::connect(JARS_CONNECTION_STRING);
 
     try {
         $jars
