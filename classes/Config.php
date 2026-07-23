@@ -27,11 +27,6 @@ abstract class Config
         return null;
     }
 
-    public function landingpage(): ?string
-    {
-        return null;
-    }
-
     public function requires(): array
     {
         return [];

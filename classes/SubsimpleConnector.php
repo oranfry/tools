@@ -94,7 +94,7 @@ class SubsimpleConnector
                 }
 
                 if (!$this->httpMounted || $default) {
-                    $this->config->landingpage = $httpMountPoint . $pluginConfig->landingpage();
+                    $this->config->landingpage = $httpMountPoint;
                 }
 
                 $route = array_filter([
