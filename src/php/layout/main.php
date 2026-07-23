@@ -15,6 +15,8 @@ use OranFry\Subsimple\Config;
 
 ?><body class="wsidebar"><?php
     ?><div id="switcher" class="modal"><?php
+        ?><div class="close-modal" style="position: absolute; top: 0; right: 0; padding: 20px; z-index: 10002"><i class="icon icon--gray icon--times"></i></div><?php
+
         $shownPlugins = array_filter(Config::get()->httpMounted ?? [], fn ($plugin) => !($plugin->options['hidden'] ?? false));
 
         if (count($shownPlugins) > 1) {
@@ -26,8 +28,8 @@ use OranFry\Subsimple\Config;
                 ?></a><?php
                 ?><br><?php
             }
+            ?><br><?php
         }
-        ?><br><?php
 
         ss_require('src/php/partial/tools/token-box.php');
         ?><br><?php
