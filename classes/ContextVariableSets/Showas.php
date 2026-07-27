@@ -14,6 +14,7 @@ class Showas extends \OranFry\ContextVariableSets\ContextVariableSet
         'pie' => 'piegraph',
         'spending' => 'dollar',
         'summaries' => 'sigma',
+        'stats' => 'info',
     ];
 
     public function __construct(string $prefix, array $default_data = [], ?string $partial = null)
