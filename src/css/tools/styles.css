@@ -1143,6 +1143,14 @@ input[type="number"]::-webkit-inner-spin-button {
         background-color: #ddd;
     }
 
+    .easy-table tr.last-selected td:first-child {
+        border-left: 1px solid #073976;
+    }
+
+    .easy-table tr.last-selected td:last-child {
+        border-right: 1px solid #073976;
+    }
+
     .navbar, .nav-dropdown {
         background: #e7e7e7;
     }
