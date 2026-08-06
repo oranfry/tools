@@ -10,9 +10,10 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
     public function __construct(string $prefix, array $default_data = [], ?string $partial = null)
     {
         $jars = $default_data['jars'];
-        $report = $default_data['report'];
-
         unset($default_data['jars']);
+
+        $report = $default_data['report'];
+        unset($default_data['report']);
 
         parent::__construct($prefix, $default_data, $partial);
 
@@ -64,7 +65,19 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
     public function inputs()
     {
         foreach (array_merge($this->value, [null]) as $i => $selected) {
-            ?><input name="<?= $this->prefix ?>__<?= $i ?>" type="hidden" value="<?= $selected ?>"><?php
+            echo 'window.contextVariableSets.' . $this->prefix . '__' . $i . " = '" . htmlspecialchars($selected ?? '') . "';";
         }
+    }
+
+    public function invisible(): bool
+    {
+        foreach ($this->options as $optionSet) {
+            if (count($optionSet) > 1 || reset($optionSet) !== '') {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }

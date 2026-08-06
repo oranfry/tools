@@ -1,0 +1,24 @@
+.group-navigator-chunk {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.group-navigator-chunk + .group-navigator-chunk {
+    margin-top: 5px;
+}
+
+.group-navigator-chunk__input {
+    flex: 0 0 85%;
+}
+
+.group-navigator-chunk__buttons {
+    flex: 0 0 15%;
+    /*text-align: center;*/
+    padding-left: 0.5em;
+}
+
+.group-navigator-chunk__input > select {
+    width: 100%;
+}
+
