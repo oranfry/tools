@@ -1,1 +1,0 @@
-<input class="field value" type="number" step="<?= 1 / pow(10, (@$field->dp ?: 0)) ?>" name="<?= $field->name ?>" value="<?= $value ?>" autocomplete="off" style="width: 8em" <?= @$field->readonly ? 'disabled' : null ?>>
