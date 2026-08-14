@@ -10,37 +10,35 @@ $_options = $this->options;
 $origPathDepth = count($_options);
 $i = 0;
 
-?><div style="margin-bottom: 2em;"><?php
-
 while ($options = array_shift($_options)) {
     $selected = array_shift($_value);
 
     if (count($options) > 1 || reset($options) !== '') {
+        $resetSubGroups = null;
+
+        for ($c = $i + 1; $c < $origPathDepth; $c++) {
+            if ($c > $i + 1) {
+                $resetSubGroups .= '&';
+            }
+
+            $resetSubGroups .= $this->prefix . '__' . $c . '=';
+        }
+
         ?><div class="group-navigator-chunk"><?php
             ?><div class="group-navigator-chunk__input"><?php
-
-                $resetSubGroups = null;
-
-                for ($c = $i + 1; $c < $origPathDepth; $c++) {
-                    if ($c > $i + 1) {
-                        $resetSubGroups .= '&';
-                    }
-
-                    $resetSubGroups .= $this->prefix . '__' . $c . '=';
-                }
-
                 ?><select<?php
                     ?> class="<?php
                         ?>cv-surrogate<?php
 
-                        if ($i < $origPathDepth - 1) {
+                        if ($this->manips || $resetSubGroups) {
                             echo ' cv-manip';
                         }
                     ?>"<?php
+
                     ?> data-for="<?= $this->prefix ?>__<?= $i ?>"<?php
 
-                    if ($resetSubGroups) {
-                        ?> data-manips="<?= $resetSubGroups ?>"<?php
+                    if ($this->manips || $resetSubGroups) {
+                        ?> data-manips="<?= implode('&', array_filter([$this->manips, $resetSubGroups])) ?>"<?php
                     }
                 ?>><?php
                     ?><option></option><?php
@@ -58,9 +56,11 @@ while ($options = array_shift($_options)) {
             ?></div><?php
 
             ?><div class="group-navigator-chunk__buttons"><?php
-                ?><a style="display: block; line-height: 0" class="cv-manip" data-manips="<?= $resetSubGroups ?>"><?php
-                    ?><i class="icon icon--gray icon--repeat icon--small"></i><?php
-                ?></a><?php
+                if ($this->manips || $resetSubGroups) {
+                    ?><a style="display: block; line-height: 0" class="cv-manip" data-manips="<?= implode('&', array_filter([$this->manips, $resetSubGroups])) ?>"><?php
+                        ?><i class="icon icon--gray icon--repeat icon--small"></i><?php
+                    ?></a><?php
+                }
             ?></div><?php
         ?></div><?php
     }
@@ -69,5 +69,3 @@ while ($options = array_shift($_options)) {
 
     $i++;
 }
-
-?></div><?php

@@ -64,7 +64,7 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
 
     public function inputs()
     {
-        foreach (array_merge($this->value, [null]) as $i => $selected) {
+        foreach (array_merge($this->value) as $i => $selected) {
             echo 'window.contextVariableSets.' . $this->prefix . '__' . $i . " = '" . htmlspecialchars($selected ?? '') . "';";
         }
     }
