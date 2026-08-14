@@ -60,8 +60,9 @@ use OranFry\Subsimple\Config;
 
     ss_require('src/php/partial/tools/variables.php');
 
-    ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
-
-    ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata);
+    if (!defined('TOOLS_DISABLE_JAVASCRIPT') || !TOOLS_DISABLE_JAVASCRIPT) {
+        ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
+        ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata);
+    }
 ?></body><?php
 ?></html><?php

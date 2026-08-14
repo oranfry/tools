@@ -132,9 +132,9 @@
             prevNavsetTop = navsetTop;
         });
 
-        $('.navbar-placeholder').height($('.navbar').outerHeight() + 'px');
-
-        $('body').toggleClass('wsidebar', $(window).width() >= 1200);
+        $('.navbar-placeholder').height(
+            $('.nav-hub').outerHeight() + 'px'
+        );
     };
 
     var resizeTimer = null;
@@ -305,6 +305,11 @@
             }
         }
     });
+
+    $('.menu-trigger').on('click', function(e) {
+        $('.navbar').toggleClass('open');
+    });
+
 
     onResize();
     repeaterChanged();

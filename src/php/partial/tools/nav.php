@@ -6,27 +6,30 @@ use OranFry\Obex\Obex;
 $plugin = Obex::find(Config::get()->mounted, 'httpMountPoint', 'is', TOOLS_PLUGIN_MOUNT_POINT);
 
 ?><div class="navbar-placeholder" style="height: 2.5em;">&nbsp;</div><?php
-?><div class="navbar printhide"><?php
-    if (BACK) {
-        ?><div class="only-sub1200 navset sidebar-backlink-container"><a class="sidebar-backlink" href="<?= BACK ?>">Back</a></div><?php
-    }
-
-    ?><div class="navset"><?php
-        ?><span class="switcher-trigger modal-trigger" data-for="switcher"><?php
+?><div class="navbar-container printhide"><?php
+    ?><div class="nav-hub appcolor-bg"><?php
+        ?><div class="switcher-trigger modal-trigger" data-for="switcher"><?php
             ?><i class="icon icon--gray icon--tiles"></i><?php
-            ?><span class="only-super1200"><?php
-                echo ' ' . TOOLS_PLUGIN_TITLE;
-            ?></span><?php
-        ?></span><?php
+        ?></div><?php
+        ?><div class="menu-trigger"><?php
+            echo ' ' . TOOLS_PLUGIN_TITLE;
+        ?></div><?php
+        ?><div class="menu-trigger"><?php
+            ?><i class="icon icon--gray icon--hamburger only-sub1200"></i><?php
+        ?></div><?php
     ?></div><?php
 
-    foreach (TOOLS_PLUGIN_CONFIG->contextVariables() as $var) {
-        $var->display();
-    }
+    ?><div class="navbar"><?php
+        ?><div style="height: 2em;">&nbsp;</div><?php
 
-    if (TOOLS_PLUGIN_INCLUDE_PATH) {
-        @include TOOLS_PLUGIN_INCLUDE_PATH . '/src/php/partial/nav/tools-plugin.php';
-    }
+        foreach (TOOLS_PLUGIN_CONFIG->contextVariables() as $var) {
+            $var->display();
+        }
 
-    ss_include('src/php/partial/nav/' . PAGE . '.php', array_merge(compact('plugin'), $viewdata));
+        if (TOOLS_PLUGIN_INCLUDE_PATH) {
+            @include TOOLS_PLUGIN_INCLUDE_PATH . '/src/php/partial/nav/tools-plugin.php';
+        }
+
+        ss_include('src/php/partial/nav/' . PAGE . '.php', array_merge(compact('plugin'), $viewdata));
+    ?></div><?php
 ?></div><?php

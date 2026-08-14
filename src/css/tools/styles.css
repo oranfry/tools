@@ -60,10 +60,6 @@ nav:empty {
     display: none;
 }
 
-body.wsidebar .wrapper {
-    padding-left: 280px;
-}
-
 .applink {
     padding: 0;
     text-decoration: none;
@@ -620,10 +616,6 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #333;
 }
 
-.sidebar-backlink:before, .navbar-backlink:before {
-    content: "< ";
-}
-
 .navbar-backlink {
     position: absolute;
     line-height: 2.25em;
@@ -679,13 +671,45 @@ input[type="number"]::-webkit-inner-spin-button {
     display: inline;
 }
 
-.navbar {
-    padding: 0.5em;
-    top: 0;
+.navbar-container {
     position: fixed;
+    top: 0;
+    left: 0;
     margin: 0;
-    z-index: 1000;
+    z-index: 2001;
     box-sizing: border-box;
+}
+
+.nav-hub {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: inherit;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    line-height: 1.2em;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 0.5em;
+    vertical-align: bottom;
+    z-index: 2003;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 0.5em;
+    margin: 0;
+    z-index: 2002;
+    box-sizing: border-box;
+    width: inherit;
+    height: 100dvh;
+    overflow-y: auto;
 }
 
 .nav-dropdown--spacey {
@@ -716,11 +740,29 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: default;
 }
 
-
 #switcher {
     font-size: 150%;
     line-height: 200%;
     text-align: left;
+}
+
+.nav-hub :nth-child(1), .nav-hub :nth-child(3) {
+    flex: 1;
+}
+
+.nav-hub :nth-child(2) {
+    flex: 0 1 auto;
+    text-align: center;
+}
+
+.nav-hub :nth-child(3) {
+  text-align: right;
+}
+
+.navbar a, .navbar h4 {
+    display: block;
+    text-decoration: none;
+    padding: 0.3em;
 }
 
 @media screen {
@@ -844,31 +886,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 1199px) {
-    .navset {
-        display: inline-block;
-        cursor: pointer;
-        position: relative;
-    }
-
     .only-super1200 {
         display: none;
     }
 
-    .navset:not(.navset--nobar):not(:first-child):before {
-        display: inline-block;
-        width: 0;
-        height: 1em;
-        margin-left: 0.5em;
-        margin-right: 0.5em;
-        content: "";
-    }
-
-    .navbar-placeholder {
-        margin-bottom: 1em;
-    }
-
-    .navbar {
+    .navbar-container {
         width: 100%;
+    }
+
+    .navbar:not(.open) {
+        display: none;
     }
 
     .nav-dropdown > a, .nav-dropdown .nav-dropdown__item {
@@ -903,8 +930,8 @@ input[type="number"]::-webkit-inner-spin-button {
         display: none;
     }
 
-    body {
-        text-align: center;
+    .wrapper {
+        padding: 0 1em;
     }
 
     table, .wrapper {
@@ -913,6 +940,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media screen and (min-width: 1200px) {
+    .wrapper {
+        padding-left: 280px;
+    }
+
     .only-sub1200 {
         display: none;
     }
@@ -921,13 +952,16 @@ input[type="number"]::-webkit-inner-spin-button {
         display: none;
     }
 
-    .navbar {
-        font-size: 1.1em;
+    .navbar-container {
         bottom: 0;
         left: 0;
         text-align: left;
         width: 250px;
         overflow-x: visible;
+    }
+
+    .navbar {
+        font-size: 1.1em;
     }
 
     .nav-dropdown a {
@@ -966,10 +1000,6 @@ input[type="number"]::-webkit-inner-spin-button {
         display: none;
     }
 
-    .navset {
-        margin-bottom: 1.5em;
-    }
-
     .navbar .inline-modal.inline-modal--right {
         left: 0.5em;
     }
@@ -982,16 +1012,6 @@ input[type="number"]::-webkit-inner-spin-button {
         display: inline-block;
         padding: 0.4em 1em;
         border-radius: 5px;
-    }
-
-    .switcher-trigger {
-        display: block;
-        margin-top: -0.5em;
-        margin-left: -0.5em;
-        margin-right: -0.5em;
-        margin-bottom: 1em;
-        padding: 0.5em;
-        cursor: pointer;
     }
 }
 
@@ -1192,11 +1212,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     @media screen and (max-width: 1199px) {
-        .navset:not(.navset--nobar):not(:first-child):before {
-            border-left: 1px solid #aaa;
-        }
-
-        .navbar {
+        .navbar-container {
             border-bottom: 1px solid #ccc;
         }
 
@@ -1206,7 +1222,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     @media screen and (min-width: 1200px) {
-        .navbar {
+        .navbar-container {
             border-right: 1px solid #ccc;
         }
 
@@ -1385,12 +1401,13 @@ input[type="number"]::-webkit-inner-spin-button {
         -webkit-filter: grayscale(100%) brightness(0.5);
     }
 
-    @media screen and (max-width: 1199px) {
-        .navset:not(.navset--nobar):not(:first-child):before {
-            border-left: 1px solid #666;
-        }
+    .appcolor-bg .icon.icon--gray {
+        filter: grayscale(100%) brightness(0.25);
+        -webkit-filter: grayscale(100%) brightness(0.25);
+    }
 
-        .navbar {
+    @media screen and (max-width: 1199px) {
+        .navbar-container {
             border-bottom: 1px solid #555;
         }
 
@@ -1400,7 +1417,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     @media screen and (min-width: 1200px) {
-        .navbar {
+        .navbar-container {
             border-right: 1px solid #555;
         }
 
