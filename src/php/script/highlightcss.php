@@ -1,33 +1,40 @@
-<?php $highlight = defined('HIGHLIGHT') ? HIGHLIGHT : '#ff0000'; ?>
-.appcolor-bg,
-.button.button--main,
-nav a.current,
-td.today,
-tr.today td,
-.periodchoice.periodchoice--current,
-.nav-dropdown a.current,
-.drnav.current,
-.cv-manip.current,
-.navbar .listable a.current {
-    background-color: #<?= $highlight ?>;
-    color: #333;
-}
+<?php
 
-.navbar .listable a.current {
-    color: #333;
-}
+$highlight = defined('HIGHLIGHT') ? HIGHLIGHT : '#ff0000';
 
-.button.button--main {
-    border: 1px solid #<?= adjustBrightness($highlight, -60) ?>
-}
+echo implode(',', [
+    '.appcolor-bg',
+    '.button.button--main',
+    'nav a.current',
+    'td.today',
+    'tr.today td',
+    '.periodchoice.periodchoice--current',
+    '.nav-dropdown a.current',
+    '.drnav.current',
+    '.cv-manip.current',
+    '.navbar .listable a.current',
+]);
 
-.button.button--main.disabled {
-    background-color: #<?= adjustBrightness($highlight, 60) ?>;
-    border: 1px solid #<?= $highlight ?>;
-}
+?>{<?php
+    ?>background-color: #<?= $highlight ?>;<?php
+    ?>color: #333;<?php
+?>}<?php
 
-@media screen and (min-width: 1200px) {
-    .switcher-trigger {
-        background-color: #<?= $highlight ?>;
-    }
-}
+?>.navbar .listable a.current {<?php
+    ?>color: #333;<?php
+?>}<?php
+
+?>.button.button--main {<?php
+    ?>border: 1px solid #<?= adjustBrightness($highlight, -60) ?>;<?php
+?>}<?php
+
+?>.button.button--main.disabled {<?php
+    ?>background-color: #<?= adjustBrightness($highlight, 60) ?>;<?php
+    ?>border: 1px solid #<?= $highlight ?>;<?php
+?>}<?php
+
+?>@media screen and (min-width: 1200px) {<?php
+    ?>.switcher-trigger {<?php
+        ?>background-color: #<?= $highlight ?>;<?php
+    ?>}<?php
+?>}<?php
