@@ -45,13 +45,13 @@ use OranFry\Subsimple\Config;
 
         ss_include('src/php/partial/preflash/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata);
 
-        ?><div class="flash"><?php
+        ?><div class="flash"><div class="snap-pad"><?php
 
         foreach (is_array(@$flash) ? $flash : [] as $message) {
             ?><div class="flash__message <?= @$message->type ? "flash__message--{$message->type}" : null ?>"><?= $message->message ?></div><?php
         }
 
-        ?></div><?php
+        ?></div></div><?php
 
         ss_require('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata);
     ?></div><?php

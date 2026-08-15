@@ -765,6 +765,10 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 0.3em;
 }
 
+.snap-pad {
+    padding: 0 1em 0 0;
+}
+
 @media screen {
     nav a span, .event img {
         filter: grayscale(100%);
@@ -934,7 +938,7 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 0 1em;
     }
 
-    table, .wrapper {
+    .wrapper {
         margin: 0 auto;
     }
 }
