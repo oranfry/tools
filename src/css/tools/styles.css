@@ -938,8 +938,9 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 0 1em;
     }
 
-    .wrapper {
-        margin: 0 auto;
+    .wrapper, .easy-table {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
