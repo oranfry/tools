@@ -11,7 +11,7 @@ $plugin = Obex::find(Config::get()->mounted, 'httpMountPoint', 'is', TOOLS_PLUGI
         ?><div class="switcher-trigger modal-trigger" data-for="switcher"><?php
             ?><i class="icon icon--gray icon--tiles"></i><?php
         ?></div><?php
-        ?><div class="menu-trigger"><?php
+        ?><div class="modal-trigger" data-for="switcher"><?php
             echo ' ' . TOOLS_PLUGIN_TITLE;
         ?></div><?php
         ?><div class="menu-trigger"><?php

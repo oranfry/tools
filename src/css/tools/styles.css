@@ -1038,7 +1038,7 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 1em;
 }
 
-.inline-modal-trigger {
+.modal-trigger, .inline-modal-trigger, .menu-trigger, .switcher-trigger {
     cursor: pointer;
 }
 

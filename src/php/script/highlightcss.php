@@ -33,8 +33,3 @@ echo implode(',', [
     ?>border: 1px solid #<?= $highlight ?>;<?php
 ?>}<?php
 
-?>@media screen and (min-width: 1200px) {<?php
-    ?>.switcher-trigger {<?php
-        ?>background-color: #<?= $highlight ?>;<?php
-    ?>}<?php
-?>}<?php
