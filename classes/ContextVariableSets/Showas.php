@@ -16,6 +16,7 @@ class Showas extends \OranFry\ContextVariableSets\ContextVariableSet
         'summaries' => 'sigma',
         'stats' => 'info',
         'summarystats' => 'info',
+        'raw' => 'leaf',
     ];
 
     public function __construct(string $prefix, array $default_data = [], ?string $partial = null)
