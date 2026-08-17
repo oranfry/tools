@@ -10,10 +10,10 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
     public function __construct(string $prefix, array $default_data = [], ?string $partial = null)
     {
         $jars = $default_data['jars'];
-        unset($default_data['jars']);
-
         $report = $default_data['report'];
-        unset($default_data['report']);
+        $auto_advance_levels = $default_data['auto_advance'] ?? INF;
+
+        unset($default_data['jars'], $default_data['report'], $default_data['report']);
 
         parent::__construct($prefix, $default_data, $partial);
 
@@ -62,7 +62,7 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
         $this->value = $path;
     }
 
-    public function inputs()
+    public function inputs(): void
     {
         foreach (array_merge($this->value) as $i => $selected) {
             echo 'window.contextVariableSets.' . $this->prefix . '__' . $i . " = '" . htmlspecialchars($selected ?? '') . "';";
