@@ -11,9 +11,9 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
     {
         $jars = $default_data['jars'];
         $report = $default_data['report'];
-        $auto_advance_levels = $default_data['auto_advance'] ?? INF;
+        $auto_advance_levels = $default_data['auto_advance'] ?? 0;
 
-        unset($default_data['jars'], $default_data['report'], $default_data['report']);
+        unset($default_data['jars'], $default_data['report'], $default_data['auto_advance']);
 
         parent::__construct($prefix, $default_data, $partial);
 
@@ -30,8 +30,6 @@ class GroupNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
         }
 
         $path = [];
-
-        $auto_advance_levels = $default_data['auto_advance'] ?? INF;
 
         while (null !== $piece = array_shift($_path)) {
             $prefix = ($prefix = implode('/', $path)) ? $prefix . '/' : '';
