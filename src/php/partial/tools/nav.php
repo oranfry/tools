@@ -20,10 +20,12 @@ $plugin = Obex::find(Config::get()->mounted, 'httpMountPoint', 'is', TOOLS_PLUGI
     ?></div><?php
 
     ?><div class="navbar"><?php
-        ?><div style="height: 2em;">&nbsp;</div><?php
+        ?><div style="height: 32.8px">&nbsp;</div><?php
 
         foreach (TOOLS_PLUGIN_CONFIG->contextVariables() as $var) {
-            $var->display();
+            ?><div id="cvs-<?= $var->prefix ?>" style="margin: 1em 0 1em"><?php
+                $var->display();
+            ?></div><?php
         }
 
         if (TOOLS_PLUGIN_INCLUDE_PATH) {

@@ -678,6 +678,8 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
     z-index: 2001;
     box-sizing: border-box;
+    width: 250px;
+    overflow-x: visible;
 }
 
 .nav-hub {
@@ -691,10 +693,10 @@ input[type="number"]::-webkit-inner-spin-button {
     justify-content: space-between;
     align-items: center;
 
-    line-height: 1.2em;
+    line-height: 16.8px;
     font-weight: bold;
     vertical-align: middle;
-    padding: 0.5em;
+    padding: 8px;
     vertical-align: bottom;
     z-index: 2003;
 }
@@ -708,8 +710,8 @@ input[type="number"]::-webkit-inner-spin-button {
     z-index: 2002;
     box-sizing: border-box;
     width: inherit;
-    height: 100dvh;
     overflow-y: auto;
+    font-size: 1.1em;
 }
 
 .nav-dropdown--spacey {
@@ -759,14 +761,71 @@ input[type="number"]::-webkit-inner-spin-button {
   text-align: right;
 }
 
-.navbar a, .navbar h4 {
+.navbar h4 {
+    display: block;
+    text-decoration: none;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+
+.snap-pad {
+    padding: 0 1.5em 0 0;
+}
+
+.tools-cv-container {
+    margin: 1.5em 0;
+}
+
+.nav-dropdown a {
+    padding: 0.2em;
+}
+
+.navbar .listable a, .navbar .listable h4 {
     display: block;
     text-decoration: none;
     padding: 0.3em;
 }
 
-.snap-pad {
-    padding: 0 1em 0 0;
+.navbar .listable h4:not(:first-child) {
+    margin-top: 1em;
+}
+
+.navbar .listable a.current {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-title {
+    margin-bottom: 0.4em;
+    font-family: monospace;
+}
+
+.nav-title, .listable a {
+    padding: 0.2em;
+}
+
+.navbar .navbr {
+    display: none;
+}
+
+.navset {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.navbar .inline-modal.inline-modal--right {
+    left: 0.5em;
+}
+
+.sidebar-backlink-container {
+    text-align: right;
+}
+
+.sidebar-backlink {
+    display: inline-block;
+    padding: 0.4em 1em;
+    border-radius: 5px;
 }
 
 @media screen {
@@ -894,6 +953,15 @@ input[type="number"]::-webkit-inner-spin-button {
         display: none;
     }
 
+    .snap-pad {
+        padding: 0 1.5em;
+    }
+
+    .wrapper, .easy-table, .easy-table-title {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .navbar-container {
         width: 100%;
     }
@@ -902,121 +970,25 @@ input[type="number"]::-webkit-inner-spin-button {
         display: none;
     }
 
-    .nav-dropdown > a, .nav-dropdown .nav-dropdown__item {
-        display: block;
-    }
-
-    .nav-dropdown > a, .nav-dropdown > i {
-        padding: 0.2em 1em;
-    }
-
-    .nav-modal nav {
-        margin: 0;
-        padding: 0;
-    }
-
-    .nav-modal {
-        position: absolute;
-        top: 0.5em;
-        z-index: 10001;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 0;
-        left: 0.5em;
-    }
-
-    .nav-modal:not(.nav-modal--open) {
-        display: none;
-    }
-
-    .nav-title {
-        display: none;
-    }
-
-    .snap-pad {
-        padding: 0 1em;
-    }
-
-    .wrapper, .easy-table {
-        margin-left: auto;
-        margin-right: auto;
+    .navbar {
+        width: 250px;
+        margin-left: -125px;
+        left: 50%;
     }
 }
 
 @media screen and (min-width: 1200px) {
     .wrapper {
-        padding-left: 280px;
+        padding-left: 250px;
+        margin-left: 1.5em;
     }
 
-    .only-sub1200 {
+    .only-sub1200, .navbar-placeholder {
         display: none;
-    }
-
-    .navbar-placeholder {
-        display: none;
-    }
-
-    .navbar-container {
-        bottom: 0;
-        left: 0;
-        text-align: left;
-        width: 250px;
-        overflow-x: visible;
     }
 
     .navbar {
-        font-size: 1.1em;
-    }
-
-    .nav-dropdown a {
-        padding: 0.2em;
-    }
-
-    .navbar .listable a, .navbar .listable h4 {
-        display: block;
-        text-decoration: none;
-        padding: 0.3em;
-    }
-
-    .navbar .listable h4:not(:first-child) {
-        margin-top: 1em;
-    }
-
-    .navbar .listable a.current {
-        display: block;
-        text-decoration: none;
-        color: white;
-    }
-
-    .nav-title {
-        margin-bottom: 0.4em;
-    }
-
-    .nav-title, .listable a {
-        padding: 0.2em;
-    }
-
-    .nav-title {
-        font-family: monospace;
-    }
-
-    .navbar .navbr {
-        display: none;
-    }
-
-    .navbar .inline-modal.inline-modal--right {
-        left: 0.5em;
-    }
-
-    .sidebar-backlink-container {
-        text-align: right;
-    }
-
-    .sidebar-backlink {
-        display: inline-block;
-        padding: 0.4em 1em;
-        border-radius: 5px;
+        height: 100dvh;
     }
 }
 

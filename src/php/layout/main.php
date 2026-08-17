@@ -13,7 +13,7 @@ use OranFry\Subsimple\Config;
     ?><title><?= @$title ?? PAGE ?></title><?php
 ?></head><?php
 
-?><body class="wsidebar"><?php
+?><body><?php
     ?><div id="switcher" class="modal"><?php
         ?><div class="close-modal" style="position: absolute; top: 0; right: 0; padding: 20px; z-index: 10002"><i class="icon icon--gray icon--times"></i></div><?php
 
