@@ -41,16 +41,22 @@ while ($options = array_shift($_options)) {
                         ?> data-manips="<?= implode('&', array_filter([$this->manips, $resetSubGroups])) ?>"<?php
                     }
                 ?>><?php
-                    ?><option></option><?php
+                    ?><option value=""></option><?php
 
                     foreach ($options as $_group) {
                         if ($_group === '') {
                             continue; // would create dupe of empty option above
                         }
 
-                        $current = $_group == $selected ? 'selected' : null;
+                        ?><option<?php
+                            ?> value="<?= $_group ?>"<?php
 
-                        ?><option <?= $current ?>><?= $_group ?></option><?php
+                            if ($_group == $selected) {
+                                ?> selected<?php
+                            }
+                        ?>><?php
+                            echo $_group;
+                        ?></option><?php
                     }
                 ?></select><?php
             ?></div><?php

@@ -56,11 +56,11 @@ while ($options = array_shift($_options)) {
                             }
 
                             ?><option<?php
-                                if (!is_numeric($index)) {
-                                    ?> value="<?= $_group ?>"<?php
-                                }
+                                ?> value="<?= $_group ?>"<?php
 
-                                echo $_group == $selected->$thing ? ' selected' : null;
+                                if ($_group == $selected->$thing) {
+                                    ?> selected<?php
+                                }
                             ?>><?php
                                 echo is_numeric($index) ? $_group : $index;
                             ?></option><?php
