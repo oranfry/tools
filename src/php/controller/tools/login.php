@@ -1,7 +1,6 @@
 <?php
 
 use OranFry\Jars\Contract\BadTokenException;
-use OranFry\Jars\Contract\JarsConnector;
 use OranFry\Subsimple\Config;
 use OranFry\Subsimple\Exception;
 
@@ -12,7 +11,7 @@ if (defined('AUTH_TOKEN') && AUTH_TOKEN) {
 }
 
 if ($token = @$_COOKIE['token']) {
-    $jars = JarsConnector::connect(JARS_CONNECTION_STRING);
+    $jars = tools_fresh_jars();
 
     try {
         $jars

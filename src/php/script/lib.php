@@ -2,6 +2,7 @@
 
 use OranFry\Jars\Contract\BadTokenException;
 use OranFry\Jars\Contract\JarsConnector;
+use OranFry\Jars\Contract\Client as JarsClient;
 use OranFry\Subsimple\Config;
 use OranFry\Subsimple\Exception;
 use OranFry\Subsimple\ForbiddenException;
@@ -158,7 +159,7 @@ function postroute_tools()
     }
 
     if (!isset($jars)) {
-        $jars = JarsConnector::connect(JARS_CONNECTION_STRING);
+        $jars = tools_fresh_jars();
 
         if (!defined('AUTH_TOKEN')) {
             switch (AUTHSCHEME) {
@@ -240,4 +241,25 @@ function init_tools()
     if ($hue = @Config::get()->highlight_hue) {
         set_highlight($hue);
     }
+}
+
+function tools_fresh_jars(): JarsClient
+{
+    return JarsConnector::connect(
+        tools_jars_connection_string(),
+    );
+}
+
+function tools_jars_connection_string(): string
+{
+    if (defined('TOOLS_JARS_CONNECTION_STRING')) {
+        return TOOLS_JARS_CONNECTION_STRING;
+    }
+
+    if (defined('JARS_CONNECTION_STRING')) {
+        return JARS_CONNECTION_STRING;
+    }
+
+    throw (new Exception())
+        ->publicMessage('Could not determine connection string for use by tools');
 }
