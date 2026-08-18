@@ -11,6 +11,8 @@ class JarsAwareLedgerConfig extends \OranFry\Ledger\Config
 
     public function __construct(array $viewdata, ?int $version = null)
     {
+        parent::__construct($viewdata, $version);
+
         if (!@$viewdata['jars'] instanceof JarsClient) {
             throw new Exception('Please make sure $viewdata["jars"] is set to an instance of [' . JarsClient::class . ']');
         }
