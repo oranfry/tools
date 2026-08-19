@@ -18,22 +18,15 @@ class ChildNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
         $report = $default_data['report'];
         $linetype_name = $default_data['linetype_name'];
         $line_id = $default_data['line_id'];
-        $lines = $default_data['lines'];
-        $linetypes = $default_data['linetypes'];
 
         unset(
             $default_data['jars'],
             $default_data['report'],
             $default_data['linetype_name'],
             $default_data['line_id'],
-            $default_data['lines'],
-            $default_data['linetypes'],
         );
 
         parent::__construct($prefix, $default_data, $partial);
-
-        $default_data['lines'] = $lines;
-        $default_data['linetypes'] = $linetypes;
 
         $this->info = $this->parseChildPath(
             $jars,
