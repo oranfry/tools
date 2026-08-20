@@ -1,5 +1,4 @@
 [
     "src/js/tools/main.js",
-    "include:src/js/tools/fieldtypes.json",
     "src/js/context-variable-sets/main.js"
 ]
