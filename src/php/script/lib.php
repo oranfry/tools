@@ -210,10 +210,6 @@ function postroute_tools()
             }
         }
     }
-
-    if (defined('TOOLS_PLUGIN_CONFIG')) {
-        TOOLS_PLUGIN_CONFIG->boot();
-    }
 }
 
 function rgb2hex($rgb)

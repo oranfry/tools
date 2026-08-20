@@ -2,10 +2,13 @@
 
 namespace OranFry\Tools;
 
+use OranFry\Jars\Contract\Client as JarsClient;
+
 abstract class Config
 {
-    public function boot(): void
+    public function boot(JarsClient $jars): ?array
     {
+        return null;
     }
 
     public function contextVariables(): array
