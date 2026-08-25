@@ -141,19 +141,17 @@ input, select, button, textarea, .textbox, .button, .form-row__label {
     line-height: 1.5em;
 }
 
-.form-row__label {
-    border: 1px solid transparent;
+input[type="checkbox"] {
+    box-sizing: content-box;
+    width: 0.9em;
+    height: 1.5em;
+    background-size: contain;
+    background-position: center center;
+    filter: grayscale(100%);
 }
 
-input[type="checkbox"] {
-    display: inline-block;
-    box-sizing: content-box;
-    padding: 0;
-    width: 1.3em;
-    height: 1.3em;
-    background-size: contain;
-    filter: grayscale(100%);
-    margin: 0.3em;
+.form-row__label {
+    border: 1px solid transparent;
 }
 
 .easy-table input[type="checkbox"] {
@@ -504,42 +502,6 @@ textarea {
     max-width: 40em;
     margin: 0 auto 2em;
     padding: 1px 0 1em;
-}
-
-.form-row {
-    position: relative;
-    margin-top: 0.3em;
-}
-
-.form-row .form-row__label {
-    float: left;
-    width: 25%;
-    box-sizing: border-box;
-    text-align: right;
-    line-height: 1.5em;
-}
-
-.form-row .form-row__value {
-    position: relative;
-    float: left;
-    width: 75%;
-    box-sizing: border-box;
-    padding-left: 2em;
-    padding-right: 4em;
-}
-
-.form--even .form-row__label, .form--even .form-row__value {
-    width: 50%;
-}
-
-.form-row__value > input[type="checkbox"].includeme:first-child {
-    position: absolute;
-    left: 1em;
-    cursor: pointer;
-}
-
-.form-row__value input[type="text"], .form-row__value .textbox {
-    width: 100%;
 }
 
 .noedit input, .noedit select, .noedit textarea {
