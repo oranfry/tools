@@ -35,6 +35,7 @@ class ChildNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
             $line_id,
             $default_data['lines'],
             $default_data['linetypes'],
+            $default_data['report_meta'],
             $this->me,
             $this->context,
         );
@@ -70,6 +71,7 @@ class ChildNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
         ?string $id,
         array &$lines,
         array &$linetypes,
+        array &$report_meta,
         &$me = null,
         &$context = null
     ): array
@@ -110,6 +112,7 @@ class ChildNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
 
             $lines = $me->$property;
             $linetype = $child->linetype;
+            $report_meta = $report_meta['children'][$property] ?? null;
             $only_parent = $child->only_parent;
 
             $id_options = $id ? [substr($id, 0, 6) => $id] : [];
