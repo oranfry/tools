@@ -71,7 +71,7 @@ class ChildNavigator extends \OranFry\ContextVariableSets\ContextVariableSet
         ?string $id,
         array &$lines,
         array &$linetypes,
-        array &$report_meta,
+        ?array &$report_meta,
         &$me = null,
         &$context = null
     ): array
