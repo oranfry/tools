@@ -104,6 +104,7 @@ class SubsimpleConnector
                     'TOOLS_PLUGIN_MOUNT_POINT' => $httpMountPoint,
                     'TOOLS_PLUGIN_OPTIONS' => $options,
                     'TOOLS_PLUGIN_TITLE' => $title,
+                    'LAYOUT' => 'tools',
                 ], fn ($item) => null !== $item);
 
                 if ($httpMountPoint !== '/') {
