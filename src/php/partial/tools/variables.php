@@ -1,3 +1,6 @@
 <?php
 
-?><script type="text/javascript">const TOOLS_TOKEN_EXPIRY_DAYS = <?= defined('TOOLS_TOKEN_EXPIRY_DAYS') ? TOOLS_TOKEN_EXPIRY_DAYS : 'null'; ?>;</script><?php
+echo '<script>';
+    ?>const TOOLS_TOKEN_EXPIRY_DAYS = <?= defined('TOOLS_TOKEN_EXPIRY_DAYS') ? TOOLS_TOKEN_EXPIRY_DAYS : 'null'; ?>;<?php
+    ?>const TOOLS_BASE_URL = '<?= defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null ?>';<?php
+echo '</script>';

@@ -6,7 +6,7 @@ use OranFry\ContextVariableSets\ContextVariableSet;
 ?><html lang="en-NZ"><?php
 ?><head><?php
     ?><meta name="viewport" content="width=320, initial-scale=1, user-scalable=no"><?php
-    ?><link rel="stylesheet" type="text/css" href="/build/css/styles.<?= latest('css') ?>.css"><?php
+    ?><link rel="stylesheet" type="text/css" href="/build<?= defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null ?>/css/styles.<?= latest('css') ?>.css"><?php
     ?><meta charset="utf-8"/><?php
     ?><title>Log In</title><?php
 ?></head><?php
@@ -42,6 +42,6 @@ use OranFry\ContextVariableSets\ContextVariableSet;
 
     ss_require('src/php/partial/tools/variables.php');
 
-    ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
+    ?><script type="text/javascript" src="/build<?= defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null ?>/js/app.<?= latest('js') ?>.js"></script><?php
 ?></body><?php
 ?></html><?php

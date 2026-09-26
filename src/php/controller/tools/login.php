@@ -22,7 +22,7 @@ if ($token = @$_COOKIE['token']) {
             throw new Exception('No landing page defined');
         }
 
-        header('Location: ' . $landingpage);
+        header('Location: ' . (defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null) . $landingpage);
 
         die('Redirecting to landing page&hellip;');
     } catch (BadTokenException $e) {

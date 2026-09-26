@@ -43,7 +43,7 @@
     $('#loginform').on('submit', function(e){
         e.preventDefault();
 
-        $.ajax('/ajax/auth/login', {
+        $.ajax(TOOLS_BASE_URL + '/ajax/auth/login', {
             method: 'post',
             contentType: false,
             processData: false,
@@ -67,7 +67,7 @@
             return;
         }
 
-        $.ajax('/ajax/auth/logout', {
+        $.ajax(TOOLS_BASE_URL + '/ajax/auth/logout', {
             method: 'post',
             contentType: false,
             processData: false,

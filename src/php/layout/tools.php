@@ -8,7 +8,7 @@ use OranFry\Subsimple\Config;
 
 ?><head><?php
     ?><meta name="viewport" content="width=320, initial-scale=1, user-scalable=no"><?php
-    ?><link rel="stylesheet" type="text/css" href="/build/css/styles.<?= latest('css') ?>.css"><?php
+    ?><link rel="stylesheet" type="text/css" href="/build<?= defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null ?>/css/styles.<?= latest('css') ?>.css"><?php
     ?><meta charset="utf-8"/><?php
     ?><title><?= @$title ?? PAGE ?></title><?php
 ?></head><?php
@@ -61,7 +61,7 @@ use OranFry\Subsimple\Config;
     ss_require('src/php/partial/tools/variables.php');
 
     if (!defined('TOOLS_DISABLE_JAVASCRIPT') || !TOOLS_DISABLE_JAVASCRIPT) {
-        ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
+        ?><script type="text/javascript" src="/build<?= defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null ?>/js/app.<?= latest('js') ?>.js"></script><?php
         ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata);
     }
 ?></body><?php
