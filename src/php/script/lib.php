@@ -225,7 +225,7 @@ function set_highlight($hue)
 function doover()
 {
     setcookie('token', '', time() - 3600);
-    header('Location: ' . (defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : '/'));
+    header('Location: ' . (TOOLS_BASE_URL ?: '/'));
 
     echo "Please restart the login process\n";
 

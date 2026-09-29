@@ -12,9 +12,32 @@ class SubsimpleConnector
     protected array $cliMounted = [];
     protected ?string $fallback = null;
 
-    public function __construct(object $config)
+    public function __construct(object $config, ?string $base = null)
     {
         $this->config = $config;
+
+        if ($base && !preg_match('@^/@', $base)) {
+            throw (new Exception('Tools base URL should start with a slash if not empty'))
+                ->publicMessage('Internal error, please contact the site administrator');
+        }
+
+        if ($base === '/') {
+            throw (new Exception('Tools base URL should be empty if the base is the root URL'))
+                ->publicMessage('Internal error, please contact the site administrator');
+        }
+
+        define('TOOLS_BASE_URL', $base ?? '');
+
+        Router::add('GET ' . (TOOLS_BASE_URL ?: '/'), [
+            'PAGE' => 'tools/login',
+            'AUTHSCHEME' => 'none',
+            'LAYOUT' => 'login',
+        ]);
+
+        Router::add('POST ' . TOOLS_BASE_URL . '/ajax/auth/(?:login|logout)', [
+            'FORWARD' => \OranFry\Jars\HTTP\HttpRouter::class,
+            'EAT' => TOOLS_BASE_URL . '/ajax',
+        ]);
 
         $this->boot();
     }
@@ -107,11 +130,11 @@ class SubsimpleConnector
                     'LAYOUT' => 'tools',
                 ], fn ($item) => null !== $item);
 
-                if ($httpMountPoint !== '/') {
-                    $route['EAT'] = $httpMountPoint;
+                if ('/' !== $eat = TOOLS_BASE_URL . $httpMountPoint) {
+                    $route['EAT'] = $eat;
                 }
 
-                Router::add("HTTP $httpMountPoint.*", $route);
+                Router::add('HTTP ' . TOOLS_BASE_URL . $httpMountPoint . '.*', $route);
 
                 $this->httpMounted[] = $pluginSummary;
             }
