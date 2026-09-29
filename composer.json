@@ -9,6 +9,6 @@
         "oranfry/context-variable-sets": "*",
         "oranfry/jars-http": "*",
         "oranfry/obex": "*",
-        "oranfry/subsimple": "*"
+        "oranfry/subsimple": "^4"
     }
 }
